@@ -53,5 +53,6 @@ Abres publics sur le territoire de la Ville. Ville de Montréal. Data updated on
 * On average, how big are the trees in different areas? Compare.
 * Confidence interval for DHP of trees for each trees type and trees in each area/district. 
 * Generally, how big are the trees on road versus off road? 
+* Does the type of earth where the trees were planted depend on the area? 
 
 
