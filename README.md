@@ -39,14 +39,20 @@ The data set has missing observations for 12 variables. In addition, the data so
 The dataset can be obtained from the following source:
 Abres publics sur le territoire de la Ville. Ville de Montréal. Data updated on May 03, 2021. Retrieved from: https://donnees.montreal.ca/ville-de-montreal/arbres
 
-## Questions
-* What is the percentage changes in the number of public trees?
-* What is the percentage changes in public trees off the roads? (Ex: trees in parks)
-* What is the percentage changes in public trees on side of the roads? 
-* Which areas/districts have the most significant changes? 
-* Types of trees most planted: on road vs off road
+## Deliverables
+
+### Visualization
+* Interactive maps of existing trees of Montreal area.
+* Map of trees with size classification color coded. 
+
+### Questions
+* Types of trees most planted: on road versus off road
+* What are the top 3 areas with most trees?
+* In general, what are the most planted trees?
 * Is there any difference in the types of trees planted in different areas?
-* Which area/side of the road the trees have the biggest measure?
+* On average, how big are the trees in different areas? Compare.
 * Confidence interval for DHP of trees for each trees type and trees in each area/district. 
+* Generally, how big are the trees on road versus off road? 
+* Does the type of earth where the trees were planted depend on the area? 
 
 
