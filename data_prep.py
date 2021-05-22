@@ -40,6 +40,9 @@ print(trees.info())
 print(trees[['Coord_X', 'Coord_Y', 'Longitude', 'Latitude']].head(5))
 
 # Quebec MTM : epsg 2950. Proj: convert lon, lat -> x,y coords. Inverse. Utm 18
+trees_new['lon_new'], trees_new['lat_new'] = xy_to_lonlat(trees_new['Coord_X'],
+                                                          trees_new['Coord_Y'])
+
 
 
 
