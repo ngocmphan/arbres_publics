@@ -17,22 +17,22 @@ The data set has missing observations for 12 variables. In addition, the data so
 | EMP No | Numerical  | 317844| Unique trees number in government database| X|
 | ARROND| Numerical  | 317844| Numeral of each district/area| X|
 | ARROND_NOM| Characterical | 317844| District/area name| X|
-| Rue| Characterical | 218207| Name of the road for trees on the road.| X|
-| Cote| Categorical  | 218207| Side of the road (N- North, S - South, E - East, O - West)| X|
-| No_civique| | 171194| Numeral of the resident where the off road trees located| X|
+| Rue| Characterical | 218207| Name of the road for trees on the road.| |
+| Cote| Categorical  | 218207| Side of the road (N- North, S - South, E - East, O - West)| |
+| No_civique| | 171194| Numeral of the resident where the off road trees located| |
 |Emplacement| Character  | 317844| Type of earth/dirt that the trees located on| X|
-| Coord_X| Numerical  | 317844| x- coordinate| X|
-| Coord_Y| Numerical  | 317840| y- coordinate| X|
-|SIGLE| Character  | 317844| The shortened latin name of the plant.| X|
-|Essence latin| Character  | 317844| Full Latin name of the plant.| X|
-|Essence FR| Character  | 317844| French name of the plant.| X|
+| Coord_X| Numerical  | 317844| x- coordinate| |
+| Coord_Y| Numerical  | 317840| y- coordinate| |
+|SIGLE| Character  | 317844| The shortened latin name of the plant.| |
+|Essence latin| Character  | 317844| Full Latin name of the plant.| |
+|Essence FR| Character  | 317844| French name of the plant.| |
 |Essence ang| Character  | 317844| English name of the plant.| X|
 |DHP|Numerical | 317172| Diameter measurement of the trunc of the trees.| X|
-|Date_releve| Date| 317172| Date of the latest measurement of DHP.| X|
-|Date_plantation| Date| 150019| Plantation date of the trees. | X|
-|Localisation| | 217913| Location of the trees from the last corner of the last establishment.| X|
-|Code_parc| Numerical| 99637| Index number of the park.| X|
-|Nom_parc| Character| 99637|Name of the park. | X|
+|Date_releve| Date| 317172| Date of the latest measurement of DHP.| |
+|Date_plantation| Date| 150019| Plantation date of the trees. | |
+|Localisation| | 217913| Location of the trees from the last corner of the last establishment.| |
+|Code_parc| Numerical| 99637| Index number of the park.| |
+|Nom_parc| Character| 99637|Name of the park. | |
 |Longitude|Numerical| 317840| Longitude geolocation of each tree. | X|
 |Latitude|Numerical| 317840| Latitude geolocation of each tree.| X|
 
@@ -49,9 +49,11 @@ Abres publics sur le territoire de la Ville. Ville de Montréal. Data updated on
 * Types of trees most planted: on road versus off road
 * What are the top 3 areas with most trees?
 * In general, what are the most planted trees?
+* In general, what are the types of land that trees were most planted on?
 * Is there any difference in the types of trees planted in different areas?
 * On average, how big are the trees in different areas? Compare.
-* Confidence interval for DHP of trees for each trees type and trees in each area/district. 
+* Confidence interval for DHP of trees for each trees type and trees in each area/district.
+* Confidence interval for DHP of trees.  
 * Generally, how big are the trees on road versus off road? 
 * Does the type of earth where the trees were planted depend on the area? 
 
