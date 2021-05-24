@@ -8,25 +8,26 @@ from functools import partial
 
 
 def place_col(df):
-    place = ['parterre', 'banquette', 'terre-plein',
-             'trottoir', 'parc', 'saillie', 'verdure']
-    for p in place:
-        for i, row in df.iterrows():
-            if p in row['Emplacement']:
-                row['place'] = p
-            else:
-                row['place'] = 'others'
+    def string_test(row):
+        if 'parterre' in row:
+            return 'parterre'
+        elif 'banquette' in row:
+            return 'banquette'
+        elif 'terre-plein' in row:
+            return 'terre-plein'
+        elif 'trottoir' in row:
+            return 'trottoir'
+        elif 'parc' in row:
+            return 'parc'
+        elif 'saillie' in row:
+            return 'saillie'
+        elif 'verdure' in row:
+            return 'îlot de verdure'
+        else:
+            return 'others'
 
-    # df['place'] = np.where(
-    #     df['Emplacement'].str.contains('parterre'), 'parterre',
-    #     np.where(df['Emplacement'].str.contains('banquette'), 'banquette',
-    #              np.where(df['Emplacement'].str.contains('terre-plein'), 'terre-plein',
-    #                       np.where(df['Emplacement'].str.contains('trottoir'), 'trottoir',
-    #                                np.where(df['Emplacement'].str.contains('parc'), 'parc',
-    #                                         np.where(df['Emplacement'].str.contains('saillie'), 'saillie',
-    #                                                  np.where(df['Emplacement'].str.contains('verdure'), 'îlot de verdure', 'others')
+    df['place'] = df.apply(lambda x: string_test(x['Emplacement']), axis=1)
 
-    # ))))))
     return df
 
 
