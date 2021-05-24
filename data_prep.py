@@ -8,14 +8,25 @@ from functools import partial
 
 
 def place_col(df):
-    df['place'] = np.where(df['Emplacement'].str.contains('parterre'), 'parterre',
-                np.where(df['Emplacement'].str.contains('banquette'), 'banquette',
-                np.where(df['Emplacement'].str.contains('terre-plein'), 'terre-plein',
-                np.where(df['Emplacement'].str.contains('trottoir'), 'trottoir',
-                np.where(df['Emplacement'].str.contains('parc'), 'parc',
-                np.where(df['Emplacement'].str.contains('saillie'), 'saillie',
-                np.where(df['Emplacement'].str.contains('verdure'), 'îlot de verdure', 'others')
-                                                                        ))))))
+    place = ['parterre', 'banquette', 'terre-plein',
+             'trottoir', 'parc', 'saillie', 'verdure']
+    for p in place:
+        for i, row in df.iterrows():
+            if p in row['Emplacement']:
+                row['place'] = p
+            else:
+                row['place'] = 'others'
+
+    # df['place'] = np.where(
+    #     df['Emplacement'].str.contains('parterre'), 'parterre',
+    #     np.where(df['Emplacement'].str.contains('banquette'), 'banquette',
+    #              np.where(df['Emplacement'].str.contains('terre-plein'), 'terre-plein',
+    #                       np.where(df['Emplacement'].str.contains('trottoir'), 'trottoir',
+    #                                np.where(df['Emplacement'].str.contains('parc'), 'parc',
+    #                                         np.where(df['Emplacement'].str.contains('saillie'), 'saillie',
+    #                                                  np.where(df['Emplacement'].str.contains('verdure'), 'îlot de verdure', 'others')
+
+    # ))))))
     return df
 
 
@@ -37,11 +48,7 @@ trees_new = place_col(trees)
 print(trees_new['place'].value_counts())
 
 print(trees.info())
-print(trees[['Coord_X', 'Coord_Y', 'Longitude', 'Latitude']].head(5))
 
-# Quebec MTM : epsg 2950. Proj: convert lon, lat -> x,y coords. Inverse. Utm 18
-trees_new['lon_new'], trees_new['lat_new'] = xy_to_lonlat(trees_new['Coord_X'],
-                                                          trees_new['Coord_Y'])
 
 
 
