@@ -8,6 +8,8 @@ from functools import partial
 
 
 def place_col(df):
+    """ Return data frame with a new column called 'place'
+    including 8 categories of original 30 categories 'Emplacement' variable """
     def string_test(row):
         if 'parterre' in row:
             return 'parterre'
@@ -46,9 +48,8 @@ trees['DHP'] = trees['DHP'].fillna((trees['DHP'].mean()))
 trees['Emplacement'] = trees['Emplacement'].str.lower()
 trees_new = place_col(trees)
 
-print(trees_new['place'].value_counts())
-
 print(trees.info())
+
 
 
 
