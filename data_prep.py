@@ -1,10 +1,6 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-from bokeh.io import output_file, show
-from bokeh.plotting import figure
-from pyproj import Proj, transform, Transformer
-from functools import partial
 
 
 def place_col(df):
