@@ -51,11 +51,13 @@ Abres publics sur le territoire de la Ville. Ville de Montréal. Data updated on
 * In general, what are the most planted trees?
 * In general, what are the types of land that trees were most planted on?
 * Is there any difference in the types of trees planted in different areas?
-* Are the number of trees sufficient in general for Montreal area as a whole? How about when comparing by area? 
 * On average, how big are the trees in different areas? Compare.
-* Confidence interval for DHP of trees for each trees type and trees in each area/district.
+* Is there a significant difference in the number of trees in different areas?
+* Does the type of earth where the trees were planted depend on the area? 
+* Confidence interval for DHP of trees for each tree type and trees in each area/district.
+* Are the number of trees sufficient in general for Montreal area as a whole? How about when comparing by area? 
 * Confidence interval for DHP of trees.  
 * Generally, how big are the trees on road versus off road? 
-* Does the type of earth where the trees were planted depend on the area? 
+
 
 
