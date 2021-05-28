@@ -28,12 +28,6 @@ def place_col(df):
     return df
 
 
-def xy_to_lonlat(x, y):
-    p = Proj(proj='utm', zone=19, ellps='WGS84', preserve_units=False)
-    lonlat = p(x, y, inverse=True)
-    return lonlat[0], lonlat[1]
-
-
 trees = pd.read_csv("arbres-publics.csv", dtype={'ARROND_NOM': str, 'Rue': str}, low_memory=False)
 
 # Missing values handling
@@ -43,18 +37,18 @@ trees['DHP'] = trees['DHP'].fillna((trees['DHP'].mean()))
 trees['Emplacement'] = trees['Emplacement'].str.lower()
 trees_new = place_col(trees)
 
-### Questions
+# Questions
 
-##1 Comparison between on-road and off-road trees:
+# 1 Comparison between on-road and off-road trees:
 no_on_off_road = trees_new['INV_TYPE'].value_counts()
 
-##2 Top 3 areas with most trees
+# 2 Top 3 areas with most trees
 areas = trees_new['ARROND_NOM'].value_counts()
 
-##3 Top 3 most planted trees
+# 3 Top 3 most planted trees
 trees_type = trees_new['ESSENCE_ANG'].value_counts()
 
-##4 Type of earth where trees are most planted
+# 4 Type of earth where trees are most planted
 earth_type = trees_new['place'].value_counts()
 print(earth_type)
 print(trees_new.info())
