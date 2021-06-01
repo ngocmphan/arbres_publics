@@ -14,7 +14,6 @@ tooltip = "I'm a tree"
 
 for index, row in trees_new.iterrows():
     location = [row['Latitude'], row['Longitude']]
-    marker = folium.Marker(location, tooltip=tooltip)
-    m.add_child(marker)
+    folium.Marker(location, tooltip=tooltip).add_to(m)
 
 m.save(outfile='maps_of_trees.html')
