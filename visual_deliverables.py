@@ -3,18 +3,18 @@ import folium
 import pandas as pd
 
 # Excluding NaN rows
-trees_new = trees_new.dropna(axis=0)
+trees_new = trees_new.dropna(subset=['Longitude', 'Latitude'], axis=0)
+
 
 # Create Map
-m = folium.Map(location=[45.513, -73.612], zoom_start=8,
+m = folium.Map(location=[45.513, -73.612], zoom_start=10,
                titles='Montreal maps of trees')
 
 tooltip = "I'm a tree"
 
 for index, row in trees_new.iterrows():
-    location = [row['Longitude'], row['Latitude']]
-    folium.Marker(location, tooltip=tooltip).add_to(m)
+    location = [row['Latitude'], row['Longitude']]
+    marker = folium.Marker(location, tooltip=tooltip)
+    m.add_child(marker)
 
 m.save(outfile='maps_of_trees.html')
-
-
