@@ -23,6 +23,7 @@ ax = sns.boxplot(x='ARROND_NOM', y='DHP', data=trees_new)
 ax.set_xticklabels(ax.get_xticklabels(), rotation=40, ha="right")
 plt.close()
 
-histo = sns.histplot(trees_new, x='DHP', hue='ARROND_NOM', bins=40,
-                     discrete=False, multiple='stack')
+histo = sns.displot(trees_new, x='DHP', hue='ARROND_NOM', kind='kde',
+                    fill=True,
+                    height=5, aspect=5)
 plt.show()
