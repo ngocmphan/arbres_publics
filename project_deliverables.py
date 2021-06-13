@@ -15,10 +15,12 @@ trees_type = trees_new['ESSENCE_ANG'].value_counts()
 
 # 4 Type of earth where trees are most planted
 earth_type = trees_new['place'].value_counts()
-print(earth_type)
 print(trees_new.info())
 
 # 5 Compare the DHP of trees in different areas
 box_plot = trees_new.boxplot(column=['DHP'], by=['ARROND_NOM'], fontsize=8)
-ax = sns.boxplot(x='DHP', y='ARROND_NOM', data=trees_new)
+ax = sns.boxplot(x='ARROND_NOM', y='DHP', data=trees_new)
+ax.set_xticklabels(ax.get_xticklabels(), rotation=40, ha="right")
+
+histo = sns.displot(trees_new, x='DHP', hue='ARROND_NOM', bins=10)
 plt.show()
