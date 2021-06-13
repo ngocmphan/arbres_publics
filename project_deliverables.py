@@ -21,6 +21,8 @@ print(trees_new.info())
 box_plot = trees_new.boxplot(column=['DHP'], by=['ARROND_NOM'], fontsize=8)
 ax = sns.boxplot(x='ARROND_NOM', y='DHP', data=trees_new)
 ax.set_xticklabels(ax.get_xticklabels(), rotation=40, ha="right")
+plt.close()
 
-histo = sns.displot(trees_new, x='DHP', hue='ARROND_NOM', bins=10)
+histo = sns.histplot(trees_new, x='DHP', hue='ARROND_NOM', bins=40,
+                     discrete=False, multiple='stack')
 plt.show()
