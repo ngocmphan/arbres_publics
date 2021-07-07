@@ -37,7 +37,7 @@ trees['DHP'] = trees['DHP'].fillna((trees['DHP'].mean()))
 trees['Emplacement'] = trees['Emplacement'].str.lower()
 trees_new = place_col(trees)
 
-
+print(trees_new.info())
 
 
 

@@ -29,7 +29,7 @@ ahuntsic_test = ahuntsic.loc[ahuntsic['ESSENCE_ANG'] =='spruce Iseli Fastigiata'
 for x in trees_new['ARROND_NOM'].unique():
     area = trees_new.loc[trees_new['ARROND_NOM']== x]
     area_trees = area['ESSENCE_ANG'].value_counts().head(2)
-    print('Area:', x, '\\', 'Most planted:', area_trees)
+    # print('Area:', x, '\\', 'Most planted:', area_trees)
 
 # 6 Compare the DHP of trees in different areas
 box_plot = trees_new.boxplot(column=['DHP'], by=['ARROND_NOM'], fontsize=8)
@@ -41,3 +41,9 @@ histo = sns.displot(trees_new, x='DHP', hue='ARROND_NOM', kind='kde',
                     fill=True,
                     height=5, aspect=5)
 
+
+# 11 Confidence interval for DHP of trees.
+std = trees_new['DHP'].std()
+mean = trees_new['DHP'].mean()
+
+print('Confidence interval: [{0:2f}, {1:2f}]'.format(mean-std, mean+std))
