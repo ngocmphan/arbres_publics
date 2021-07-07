@@ -40,10 +40,14 @@ plt.close()
 histo = sns.displot(trees_new, x='DHP', hue='ARROND_NOM', kind='kde',
                     fill=True,
                     height=5, aspect=5)
-
+plt.close()
 
 # 11 Confidence interval for DHP of trees.
 std = trees_new['DHP'].std()
 mean = trees_new['DHP'].mean()
-
-print('Confidence interval: [{0:2f}, {1:2f}]'.format(mean-std, mean+std))
+fig, ax = plt.subplots()
+sns.histplot(trees_new, x='DHP').set_title('Distribution plot of trees diameter')
+ax.set_xlim(0, 120)
+plt.show()
+print('Confidence interval: [{0:2f}, {1:2f}]'.format(mean-0.05*std,
+                                                     mean+0.05*std))
