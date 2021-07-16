@@ -49,5 +49,6 @@ fig, ax = plt.subplots()
 sns.histplot(trees_new, x='DHP').set_title('Distribution plot of trees diameter')
 ax.set_xlim(0, 120)
 plt.show()
-print('Confidence interval: [{0:2f}, {1:2f}]'.format(mean-0.05*std,
-                                                     mean+0.05*std))
+print('Confidence interval: [{0:2f}, {1:2f}]'.format(mean-0.03*std,
+                                                     mean+0.03*std))
+
