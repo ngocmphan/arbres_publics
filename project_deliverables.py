@@ -1,6 +1,7 @@
 from data_prep import trees_new
 import matplotlib.pyplot as plt
 import seaborn as sns
+from math import sqrt
 
 # Questions
 
@@ -16,7 +17,31 @@ trees_type = trees_new['ESSENCE_ANG'].value_counts()
 # 4 Type of earth where trees are most planted
 earth_type = trees_new['place'].value_counts()
 
-# 5  Differences in type of trees in different areas
+# 6 Compare the DHP of trees in different areas
+box_plot = trees_new.boxplot(column=['DHP'], by=['ARROND_NOM'], fontsize=8)
+ax = sns.boxplot(x='ARROND_NOM', y='DHP', data=trees_new)
+ax.set_xticklabels(ax.get_xticklabels(), rotation=40, ha="right")
+plt.close()
+
+histo = sns.displot(trees_new, x='DHP', hue='ARROND_NOM', kind='kde',
+                    fill=True,
+                    height=5, aspect=5)
+plt.close()
+
+# 5 95% Confidence interval for DHP of trees.
+std = trees_new['DHP'].std()
+mean = trees_new['DHP'].mean()
+n = trees_new['DHP'].count()
+multiplier = std/sqrt(n)
+fig, ax = plt.subplots()
+sns.histplot(trees_new, x='DHP').set_title('Distribution plot of trees diameter')
+ax.set_xlim(0, 120)
+plt.close()
+print(mean)
+print('Confidence interval: [{0:2f}, {1:2f}]'.format(mean-1.96*multiplier,
+                                                     mean+1.96*multiplier))
+
+# 7  Differences in type of trees in different areas
 trees_type_dif = trees_new.groupby(by=['ARROND_NOM', 'ESSENCE_ANG'],
                                    sort=True,
                                    as_index=False)['ESSENCE_ANG'].count()
@@ -30,25 +55,3 @@ for x in trees_new['ARROND_NOM'].unique():
     area = trees_new.loc[trees_new['ARROND_NOM']== x]
     area_trees = area['ESSENCE_ANG'].value_counts().head(2)
     # print('Area:', x, '\\', 'Most planted:', area_trees)
-
-# 6 Compare the DHP of trees in different areas
-box_plot = trees_new.boxplot(column=['DHP'], by=['ARROND_NOM'], fontsize=8)
-ax = sns.boxplot(x='ARROND_NOM', y='DHP', data=trees_new)
-ax.set_xticklabels(ax.get_xticklabels(), rotation=40, ha="right")
-plt.close()
-
-histo = sns.displot(trees_new, x='DHP', hue='ARROND_NOM', kind='kde',
-                    fill=True,
-                    height=5, aspect=5)
-plt.close()
-
-# 11 Confidence interval for DHP of trees.
-std = trees_new['DHP'].std()
-mean = trees_new['DHP'].mean()
-fig, ax = plt.subplots()
-sns.histplot(trees_new, x='DHP').set_title('Distribution plot of trees diameter')
-ax.set_xlim(0, 120)
-plt.show()
-print('Confidence interval: [{0:2f}, {1:2f}]'.format(mean-0.03*std,
-                                                     mean+0.03*std))
-
