@@ -41,9 +41,18 @@ print('Confidence interval: [{0:2f}, {1:2f}]'.format(mean-1.96*multiplier,
                                                      mean+1.96*multiplier))
 
 # 6 DHP measure of the trees on road and off road
-print(trees_new['INV_TYPE'].unique())
 on_road = trees_new.loc[trees_new['INV_TYPE'] == 'R']
 off_road = trees_new.loc[trees_new['INV_TYPE'] == 'H']
+
+fig, ax = plt.subplots()
+on_road_plot = sns.histplot(on_road, x='DHP', label='on_road', color='red')
+off_road_plot = sns.histplot(off_road, x='DHP', label='off_road', color='blue')
+ax.set_xlim(0, 120)
+plt.title('Distribution plot of on and off road trees')
+plt.legend()
+plt.close()
+
+
 
 std_on_road = on_road['DHP'].std()
 std_off_road = off_road['DHP'].std()
@@ -57,12 +66,12 @@ n_off_road = off_road['DHP'].count()
 multiplier_on_road = std/sqrt(n_on_road)
 multiplier_off_road = std/sqrt(n_off_road)
 
-print('Confidence interval of on road trees: [{0:2f}, {1:2f}]'.
-      format(mean_on_road - 1.96*multiplier_on_road,
-             mean_on_road + 1.96*multiplier_on_road))
-print('Confidence interval of off road trees: [{0:2f}, {1:2f}]'
-      .format(mean_off_road - 1.96*multiplier_off_road,
-              mean_off_road + 1.96*multiplier_off_road))
+# print('Confidence interval of on road trees: [{0:2f}, {1:2f}]'.
+#       format(mean_on_road - 1.96*multiplier_on_road,
+#              mean_on_road + 1.96*multiplier_on_road))
+# print('Confidence interval of off road trees: [{0:2f}, {1:2f}]'
+#       .format(mean_off_road - 1.96*multiplier_off_road,
+#               mean_off_road + 1.96*multiplier_off_road))
 
 # 7  Differences in type of trees in different areas
 trees_type_dif = trees_new.groupby(by=['ARROND_NOM', 'ESSENCE_ANG'],
