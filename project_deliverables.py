@@ -44,6 +44,9 @@ print('Confidence interval: [{0:2f}, {1:2f}]'.format(mean-1.96*multiplier,
 on_road = trees_new.loc[trees_new['INV_TYPE'] == 'R']
 off_road = trees_new.loc[trees_new['INV_TYPE'] == 'H']
 
+print('On road trees placement:', on_road['place'].unique())
+print('Off road trees placement:', off_road['place'].unique())
+
 fig, ax = plt.subplots()
 on_road_plot = sns.histplot(on_road, x='DHP', label='on_road', color='red')
 off_road_plot = sns.histplot(off_road, x='DHP', label='off_road', color='blue')
@@ -52,7 +55,9 @@ plt.title('Distribution plot of on and off road trees')
 plt.legend()
 plt.close()
 
-
+box_plot_on_off = sns.boxplot(x='INV_TYPE', y='DHP', data=trees_new)
+plt.title('Box plot of on and off road trees')
+plt.close()
 
 std_on_road = on_road['DHP'].std()
 std_off_road = off_road['DHP'].std()
