@@ -44,8 +44,8 @@ print('Confidence interval of Montreal trees: [{0:2f}, {1:2f}]'
 on_road = trees_new.loc[trees_new['INV_TYPE'] == 'R']
 off_road = trees_new.loc[trees_new['INV_TYPE'] == 'H']
 
-on_road_place = on_road['place'].unique()
-off_road_place = off_road['place'].unique()
+on_road_place = on_road['Emplacement'].value_counts()
+off_road_place = off_road['Emplacement'].value_counts()
 
 fig, ax = plt.subplots()
 on_road_plot = sns.histplot(on_road, x='DHP', label='on_road', color='red')
