@@ -54,6 +54,7 @@ Abres publics sur le territoire de la Ville. Ville de Montréal. Data updated on
 * Confidence interval for DHP of trees.  
 * Generally, how big are the trees on road versus off road?
 * Profile the placements of trees. 
+* Conduct unsupervised learning - clustering to identify groups of trees. 
 #### Area differences
 * Is there any difference in the types of trees planted in different areas?
 * On average, how big are the trees in different areas? Compare.
