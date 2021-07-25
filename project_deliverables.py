@@ -78,7 +78,13 @@ print('Confidence interval of off road trees: [{0:2f}, {1:2f}]'
       .format(mean_off_road - 1.96*multiplier_off_road,
               mean_off_road + 1.96*multiplier_off_road))
 
-# 7  Differences in type of trees in different areas
+# 7 Profile the placement of the trees
+box_plot_place = sns.boxplot(x='place', y='DHP', data=trees_new)
+plt.title('Box plot of different trees placements')
+plt.show()
+
+
+# 9  Differences in type of trees in different areas
 trees_type_dif = trees_new.groupby(by=['ARROND_NOM', 'ESSENCE_ANG'],
                                    sort=True,
                                    as_index=False)['ESSENCE_ANG'].count()
