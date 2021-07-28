@@ -2,6 +2,10 @@ from data_prep import trees_new
 import matplotlib.pyplot as plt
 import seaborn as sns
 from math import sqrt
+import pandas as pd
+from sklearn import preprocessing
+from sklearn.metrics import silhouette_score
+from sklearn.preprocessing import MinMaxScaler
 
 # Questions
 
@@ -81,7 +85,10 @@ print('Confidence interval of off road trees: [{0:2f}, {1:2f}]'
 # 7 Profile the placement of the trees
 box_plot_place = sns.boxplot(x='place', y='DHP', data=trees_new)
 plt.title('Box plot of different trees placements')
-plt.show()
+plt.close()
+
+# 8 Clustering to identify group of trees
+
 
 
 # 9  Differences in type of trees in different areas
