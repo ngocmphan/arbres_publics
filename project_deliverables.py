@@ -90,13 +90,14 @@ plt.title('Box plot of different trees placements')
 plt.close()
 
 # 8 Clustering to identify group of trees
-cluster_df = trees_new[['place', 'DHP', 'ARROND_NOM', 'ESSENCE_ANG']]
-scores = [KMeans(n_clusters=i+2).fit(cluster_df).inertia_
-          for i in range(10)]
-sns.lineplot(np.arange(2, 12), scores)
-plt.xlabel('Number of clusters')
-plt.ylabel('Inertia')
-plt.title('Inertia of k-means vs number of clusters')
+cluster_df = trees_new[['INV_TYPE', 'place', 'DHP', 'ARROND', 'ESSENCE_ANG']]
+
+
+def cluster_processing(df):
+    """ Processing data frame for cluster kmean: place, trees
+    name, borough name"""
+
+    return df
 
 
 # 9  Differences in type of trees in different areas
