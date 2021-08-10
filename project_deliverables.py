@@ -43,8 +43,8 @@ fig, ax = plt.subplots()
 sns.histplot(trees_new, x='DHP').set_title('Distribution plot of trees diameter')
 ax.set_xlim(0, 120)
 plt.close()
-print('Confidence interval of Montreal trees: [{0:2f}, {1:2f}]'
-      .format(mean-1.96*multiplier, mean+1.96*multiplier))
+CI_mtl = 'Confidence interval of Montreal trees: [{0:2f}, {1:2f}]'\
+    .format(mean-1.96*multiplier, mean+1.96*multiplier)
 
 # 6 DHP measure of the trees on road and off road
 on_road = trees_new.loc[trees_new['INV_TYPE'] == 'R']
@@ -77,12 +77,12 @@ n_off_road = off_road['DHP'].count()
 multiplier_on_road = std/sqrt(n_on_road)
 multiplier_off_road = std/sqrt(n_off_road)
 
-print('Confidence interval of on road trees: [{0:2f}, {1:2f}]'.
-      format(mean_on_road - 1.96*multiplier_on_road,
-             mean_on_road + 1.96*multiplier_on_road))
-print('Confidence interval of off road trees: [{0:2f}, {1:2f}]'
-      .format(mean_off_road - 1.96*multiplier_off_road,
-              mean_off_road + 1.96*multiplier_off_road))
+CI_mtl_road = 'Confidence interval of on road trees: [{0:2f}, {1:2f}]'.\
+    format(mean_on_road - 1.96*multiplier_on_road,
+           mean_on_road + 1.96*multiplier_on_road)
+CI_mtl_off_road = 'Confidence interval of off road trees: [{0:2f}, {1:2f}]'\
+    .format(mean_off_road - 1.96*multiplier_off_road,
+            mean_off_road + 1.96*multiplier_off_road)
 
 # 7 Profile the placement of the trees
 box_plot_place = sns.boxplot(x='place', y='DHP', data=trees_new)
@@ -108,7 +108,7 @@ trees_type_dif = trees_new.groupby(by=['ARROND_NOM', 'ESSENCE_ANG'],
 ahuntsic = trees_new.loc[trees_new['ARROND_NOM'] == 'Ahuntsic - Cartierville']
 ahuntsic_tree = ahuntsic['ESSENCE_ANG'].value_counts()
 ahuntsic_tree_2 = ahuntsic.groupby('ESSENCE_ANG', as_index=False).count().max()
-ahuntsic_test = ahuntsic.loc[ahuntsic['ESSENCE_ANG'] =='spruce Iseli Fastigiata']
+ahuntsic_test = ahuntsic.loc[ahuntsic['ESSENCE_ANG'] == 'spruce Iseli Fastigiata']
 
 for x in trees_new['ARROND_NOM'].unique():
     area = trees_new.loc[trees_new['ARROND_NOM']== x]
