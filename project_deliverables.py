@@ -94,9 +94,12 @@ cluster_df = trees_new[['INV_TYPE', 'place', 'DHP', 'ARROND', 'ESSENCE_ANG']]
 
 
 def cluster_processing(df):
-    """ Processing data frame for cluster kmean: place, trees
+    """ Processing data frame for cluster kmean: trees_type, place, trees
     name, borough name"""
-
+    df.loc[:, 'INV_TYPE'] = df.loc[:, 'INV_TYPE'].replace({"H": 0, "R": 1})
+    df = pd.get_dummies(df['place'])
+    df = pd.get_dummies(df['ARROND_NOM'])
+    # Apply MCA on ESSENCE_ANG
     return df
 
 
