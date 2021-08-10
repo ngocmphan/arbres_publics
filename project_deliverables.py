@@ -2,7 +2,9 @@ from data_prep import trees_new
 import matplotlib.pyplot as plt
 import seaborn as sns
 from math import sqrt
+import numpy as np
 import pandas as pd
+from sklearn.cluster import KMeans
 from sklearn import preprocessing
 from sklearn.metrics import silhouette_score
 from sklearn.preprocessing import MinMaxScaler
@@ -88,7 +90,13 @@ plt.title('Box plot of different trees placements')
 plt.close()
 
 # 8 Clustering to identify group of trees
-
+cluster_df = trees_new[['place', 'DHP', 'ARROND_NOM', 'ESSENCE_ANG']]
+scores = [KMeans(n_clusters=i+2).fit(cluster_df).inertia_
+          for i in range(10)]
+sns.lineplot(np.arange(2, 12), scores)
+plt.xlabel('Number of clusters')
+plt.ylabel('Inertia')
+plt.title('Inertia of k-means vs number of clusters')
 
 
 # 9  Differences in type of trees in different areas
