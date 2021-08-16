@@ -8,6 +8,7 @@ from sklearn.cluster import KMeans
 from sklearn import preprocessing
 from sklearn.metrics import silhouette_score
 from sklearn.preprocessing import MinMaxScaler
+import mca
 
 # Questions
 
@@ -93,13 +94,19 @@ plt.close()
 cluster_df = trees_new[['INV_TYPE', 'place', 'DHP', 'ARROND', 'ESSENCE_ANG']]
 
 
+def mca_process(df):
+    """Select significant influence plants from plants name"""
+    df_selected = df[['ARROND_NOM', 'DHP', ]]
+    mca_df = mca.MCA()
+    return df
+
+
 def cluster_processing(df):
     """ Processing data frame for cluster kmean: trees_type, place, trees
     name, borough name"""
     df.loc[:, 'INV_TYPE'] = df.loc[:, 'INV_TYPE'].replace({"H": 0, "R": 1})
     df = pd.get_dummies(df['place'])
     df = pd.get_dummies(df['ARROND_NOM'])
-    # Apply MCA on ESSENCE_ANG
     return df
 
 
