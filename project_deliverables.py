@@ -93,6 +93,13 @@ plt.close()
 # 8 Clustering to identify group of trees
 cluster_df = trees_new[['INV_TYPE', 'place', 'DHP', 'ARROND', 'ESSENCE_ANG']]
 
+mca_data = trees_new[['DHP', 'ESSENCE_ANG']]
+mca_test = mca_data.groupby('ESSENCE_ANG').agg({'DHP': 'mean',
+                                              'ESSENCE_ANG': 'count'})
+mca_df = mca.MCA(mca_test)
+
+print(mca_test)
+
 
 def mca_process(df):
     """Select significant influence plants from plants name"""
