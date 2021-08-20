@@ -118,13 +118,24 @@ def plot_corr(df):
 
 
 cluster_data = cluster_processing(cluster_df)
+plot_corr(cluster_data)
+# Non-normalized k-means
 scores = [KMeans(n_clusters=i+2).fit(cluster_data).inertia_ for i in range(10)]
 sns.lineplot(np.arange(2, 12), scores)
 plt.xlabel('Number of clusters')
 plt.ylabel('Inertia')
-plt.title('Inertia of k-means versus number of clusters')
-plot_corr(cluster_data)
-plt.show()
+plt.title('Inertia vs Number of clusters kmeans')
+plt.close()
+
+# Normalized k-means
+normalized_vector = preprocessing.normalize(cluster_data)
+normalized_scores = [KMeans(n_clusters=i+2).fit(normalized_vector).inertia_ for i in range(10)]
+sns.lineplot(np.arange(2, 12), scores)
+plt.xlabel('Number of clusters')
+plt.ylabel('Inertia')
+plt.title('Inertia vs Number of clusters kmeans')
+plt.show()  # 4 or 5 clusters
+
 
 
 # 9  Differences in type of trees in different areas
