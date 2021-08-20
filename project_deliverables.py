@@ -1,10 +1,13 @@
+# Data handling
 from data_prep import trees_new
-import matplotlib.pyplot as plt
-import seaborn as sns
 from math import sqrt
 import numpy as np
 import pandas as pd
-from sklearn.cluster import KMeans
+# visualization
+import matplotlib.pyplot as plt
+import seaborn as sns
+# Clustering
+from sklearn.cluster import KMeans, DBSCAN
 from sklearn import preprocessing
 from sklearn.metrics import silhouette_score
 from sklearn.preprocessing import MinMaxScaler
@@ -121,21 +124,30 @@ cluster_data = cluster_processing(cluster_df)
 plot_corr(cluster_data)
 # Non-normalized k-means
 scores = [KMeans(n_clusters=i+2).fit(cluster_data).inertia_ for i in range(10)]
-sns.lineplot(np.arange(2, 12), scores)
+sns.lineplot(x=np.arange(2, 12), y=scores)
 plt.xlabel('Number of clusters')
 plt.ylabel('Inertia')
 plt.title('Inertia vs Number of clusters kmeans')
 plt.close()
 
+kmeans = KMeans(n_clusters=4)
+kmeans.fit(cluster_data)
+
 # Normalized k-means
 normalized_vector = preprocessing.normalize(cluster_data)
 normalized_scores = [KMeans(n_clusters=i+2).fit(normalized_vector).inertia_ for i in range(10)]
-sns.lineplot(np.arange(2, 12), scores)
+sns.lineplot(x=np.arange(2, 12), y=scores)
 plt.xlabel('Number of clusters')
 plt.ylabel('Inertia')
 plt.title('Inertia vs Number of clusters kmeans')
-plt.show()  # 4 or 5 clusters
+plt.close()  # 4 or 5 clusters
 
+normalized_kmeans_4 = KMeans(n_clusters=4)
+normalized_kmeans_4.fit(normalized_vector)
+
+# clustering: DBSCAN
+min_samples = cluster_data.shape[1]+1
+dbscan = DBSCAN(eps=3.5, min_samples=min_samples).fit(cluster_data)
 
 
 # 9  Differences in type of trees in different areas
