@@ -20,6 +20,8 @@ areas = trees_new['ARROND_NOM'].value_counts()
 
 # 3 Top 3 most planted trees
 trees_type = trees_new['ESSENCE_ANG'].value_counts()
+top_10_trees = trees_type[:10].index
+print(top_10_trees)
 
 # 4 Type of earth where trees are most planted
 earth_type = trees_new['place'].value_counts()
@@ -92,20 +94,7 @@ plt.close()
 
 # 8 Clustering to identify group of trees
 cluster_df = trees_new[['INV_TYPE', 'place', 'DHP', 'ARROND', 'ESSENCE_ANG']]
-
-mca_data = trees_new[['DHP', 'ESSENCE_ANG']]
-mca_test = mca_data.groupby('ESSENCE_ANG').agg({'DHP': 'mean',
-                                              'ESSENCE_ANG': 'count'})
-mca_df = mca.MCA(mca_test)
-
-print(mca_test)
-
-
-def mca_process(df):
-    """Select significant influence plants from plants name"""
-    df_selected = df[['ARROND_NOM', 'DHP', ]]
-    mca_df = mca.MCA()
-    return df
+cluster_df = cluster_df[cluster_df['ESSENCE_ANG'] in top_10_trees]
 
 
 def cluster_processing(df):
@@ -114,6 +103,7 @@ def cluster_processing(df):
     df.loc[:, 'INV_TYPE'] = df.loc[:, 'INV_TYPE'].replace({"H": 0, "R": 1})
     df = pd.get_dummies(df['place'])
     df = pd.get_dummies(df['ARROND_NOM'])
+    df = pd.get_dummies(df['ESSENCE_ANG'])
     return df
 
 
