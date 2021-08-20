@@ -20,8 +20,7 @@ areas = trees_new['ARROND_NOM'].value_counts()
 
 # 3 Top 3 most planted trees
 trees_type = trees_new['ESSENCE_ANG'].value_counts()
-top_10_trees = trees_type[:10].index
-print(top_10_trees)
+top_10_trees = list(trees_type[:10].index)
 
 # 4 Type of earth where trees are most planted
 earth_type = trees_new['place'].value_counts()
@@ -93,17 +92,16 @@ plt.title('Box plot of different trees placements')
 plt.close()
 
 # 8 Clustering to identify group of trees
-cluster_df = trees_new[['INV_TYPE', 'place', 'DHP', 'ARROND', 'ESSENCE_ANG']]
-cluster_df = cluster_df[cluster_df['ESSENCE_ANG'] in top_10_trees]
+cluster_df = trees_new[['INV_TYPE', 'place', 'DHP', 'ARROND_NOM', 'ESSENCE_ANG']]
+cluster_df = cluster_df[cluster_df['ESSENCE_ANG'].isin(top_10_trees)]
 
 
 def cluster_processing(df):
     """ Processing data frame for cluster kmean: trees_type, place, trees
     name, borough name"""
+    columns = ['place', 'ARROND_NOM', 'ESSENCE_ANG']
     df.loc[:, 'INV_TYPE'] = df.loc[:, 'INV_TYPE'].replace({"H": 0, "R": 1})
-    df = pd.get_dummies(df['place'])
-    df = pd.get_dummies(df['ARROND_NOM'])
-    df = pd.get_dummies(df['ESSENCE_ANG'])
+    df = pd.get_dummies(data=df, columns=columns)
     return df
 
 
@@ -119,7 +117,13 @@ def plot_corr(df):
     return
 
 
-
+cluster_data = cluster_processing(cluster_df)
+scores = [KMeans(n_clusters=i+2).fit(cluster_data).inertia_ for i in range(10)]
+sns.lineplot(np.arange(2, 12), scores)
+plt.xlabel('Number of clusters')
+plt.ylabel('Inertia')
+plt.title('Inertia of k-means versus number of clusters')
+plt.show()
 
 
 # 9  Differences in type of trees in different areas
