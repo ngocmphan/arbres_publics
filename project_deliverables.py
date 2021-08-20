@@ -107,6 +107,21 @@ def cluster_processing(df):
     return df
 
 
+def plot_corr(df):
+    corr = df.corr()
+    mask = np.zeros_like(corr, dtype=np.bool8)
+    mask[np.triu_indices_from(mask)] = True
+    f, ax = plt.subplots(figsize=(11, 9))
+    cmap = sns.diverging_palette(220,10, as_cmap=True)
+    sns.heatmap(corr, mask=mask, cmap= cmap, vmax=0.3, center=0,
+                square=True)
+    plt.show()
+    return
+
+
+
+
+
 # 9  Differences in type of trees in different areas
 trees_type_dif = trees_new.groupby(by=['ARROND_NOM', 'ESSENCE_ANG'],
                                    sort=True,
