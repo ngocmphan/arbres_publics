@@ -113,7 +113,7 @@ def plot_corr(df):
     cmap = sns.diverging_palette(220,10, as_cmap=True)
     sns.heatmap(corr, mask=mask, cmap= cmap, vmax=0.3, center=0,
                 square=True)
-    plt.show()
+    plt.title('Correlation plot')
     return
 
 
@@ -123,6 +123,7 @@ sns.lineplot(np.arange(2, 12), scores)
 plt.xlabel('Number of clusters')
 plt.ylabel('Inertia')
 plt.title('Inertia of k-means versus number of clusters')
+plot_corr(cluster_data)
 plt.show()
 
 
