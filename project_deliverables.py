@@ -121,34 +121,50 @@ def plot_corr(df):
 
 
 cluster_data = cluster_processing(cluster_df)
-plot_corr(cluster_data)
 # Non-normalized k-means
-scores = [KMeans(n_clusters=i+2).fit(cluster_data).inertia_ for i in range(10)]
-sns.lineplot(x=np.arange(2, 12), y=scores)
-plt.xlabel('Number of clusters')
-plt.ylabel('Inertia')
-plt.title('Inertia vs Number of clusters kmeans')
-plt.close()
+
+
+def non_norm_kmeans():
+    scores = [KMeans(n_clusters=i + 2).fit(cluster_data).inertia_ for i in
+              range(10)]
+    sns.lineplot(x=np.arange(2, 12), y=scores)
+    plt.xlabel('Number of clusters')
+    plt.ylabel('Inertia')
+    plt.title('Inertia vs Number of clusters kmeans')
+    plt.show()
+
 
 kmeans = KMeans(n_clusters=4)
 kmeans.fit(cluster_data)
 
 # Normalized k-means
-normalized_vector = preprocessing.normalize(cluster_data)
-normalized_scores = [KMeans(n_clusters=i+2).fit(normalized_vector).inertia_ for i in range(10)]
-sns.lineplot(x=np.arange(2, 12), y=scores)
-plt.xlabel('Number of clusters')
-plt.ylabel('Inertia')
-plt.title('Inertia vs Number of clusters kmeans')
-plt.close()  # 4 or 5 clusters
 
-normalized_kmeans_4 = KMeans(n_clusters=4)
-normalized_kmeans_4.fit(normalized_vector)
+
+def norm_kmeans():
+    normalized_vector = preprocessing.normalize(cluster_data)
+    normalized_scores = [KMeans(n_clusters=i+2).fit(normalized_vector).inertia_ for i in range(10)]
+    sns.lineplot(x=np.arange(2, 12), y=normalized_scores)
+    plt.xlabel('Number of clusters')
+    plt.ylabel('Inertia')
+    plt.title('Inertia vs Number of clusters kmeans')
+    plt.show()  # 4 or 5 clusters
+
+
+normalized_vector = preprocessing.normalize(cluster_data)
+normalized_kmeans = KMeans(n_clusters=4)
+normalized_kmeans.fit(normalized_vector)
 
 # clustering: DBSCAN
 min_samples = cluster_data.shape[1]+1
 dbscan = DBSCAN(eps=3.5, min_samples=min_samples).fit(cluster_data)
 
+# Evaluations
+eva_kmeans = 'kmeans: {}'.format(
+    silhouette_score(cluster_data, kmeans.labels_, metric='euclidean'))
+eva_normalized = 'cosin_kmeans: {}'.format(
+    silhouette_score(cluster_data, normalized_kmeans.labels_, metric='cosine'))
+eva_dbscan = 'DBSCAN: {}'.format(
+    silhouette_score(cluster_data, dbscan.labels_, metric='cosine'))
 
 # 9  Differences in type of trees in different areas
 trees_type_dif = trees_new.groupby(by=['ARROND_NOM', 'ESSENCE_ANG'],
@@ -161,6 +177,6 @@ ahuntsic_tree_2 = ahuntsic.groupby('ESSENCE_ANG', as_index=False).count().max()
 ahuntsic_test = ahuntsic.loc[ahuntsic['ESSENCE_ANG'] == 'spruce Iseli Fastigiata']
 
 for x in trees_new['ARROND_NOM'].unique():
-    area = trees_new.loc[trees_new['ARROND_NOM']== x]
+    area = trees_new.loc[trees_new['ARROND_NOM'] == x]
     area_trees = area['ESSENCE_ANG'].value_counts().head(2)
     # print('Area:', x, '\\', 'Most planted:', area_trees)
