@@ -134,8 +134,7 @@ def non_norm_kmeans():
     plt.show()
 
 
-kmeans = KMeans(n_clusters=4)
-kmeans.fit(cluster_data)
+kmeans = KMeans(n_clusters=4).fit(cluster_data)
 
 # Normalized k-means
 
@@ -151,20 +150,46 @@ def norm_kmeans():
 
 
 normalized_vector = preprocessing.normalize(cluster_data)
-normalized_kmeans = KMeans(n_clusters=4)
-normalized_kmeans.fit(normalized_vector)
+normalized_kmeans = KMeans(n_clusters=4).fit(normalized_vector)
 
 # clustering: DBSCAN
-min_samples = cluster_data.shape[1]+1
-dbscan = DBSCAN(eps=3.5, min_samples=min_samples).fit(cluster_data)
 
+
+def dbscan():
+    min_samples = cluster_data.shape[1]+1
+    dbscan = DBSCAN(eps=6, min_samples=min_samples).fit(cluster_data)
+    print(dbscan.labels_.unique())
 # Evaluations
-eva_kmeans = 'kmeans: {}'.format(
-    silhouette_score(cluster_data, kmeans.labels_, metric='euclidean'))
-eva_normalized = 'cosin_kmeans: {}'.format(
-    silhouette_score(cluster_data, normalized_kmeans.labels_, metric='cosine'))
-eva_dbscan = 'DBSCAN: {}'.format(
-    silhouette_score(cluster_data, dbscan.labels_, metric='cosine'))
+
+
+def evaluation():
+    eva_kmeans = silhouette_score(cluster_data, kmeans.labels_, metric='euclidean',
+                                  sample_size=1000)
+    print(eva_kmeans)
+    eva_normalized = silhouette_score(normalized_vector, normalized_kmeans.labels_,
+                                      metric='cosine', sample_size=1000)
+    print(eva_normalized)
+
+
+# Unique features
+scaler = MinMaxScaler()
+df_scaled = pd.DataFrame(scaler.fit_transform(cluster_data))
+df_scaled.columns = cluster_data.columns
+df_scaled['kmeans_norm'] = normalized_kmeans.labels_
+
+df_mean = df_scaled.loc[df_scaled['kmeans_norm'] != -1, :]\
+    .groupby('kmeans_norm').mean().reset_index()
+results = pd.DataFrame(columns=['Variable', 'std'])
+for column in df_mean.columns[1:]:
+    results.loc[len(results), :] = [column, np.std(df_mean[column])]
+selected_columns = list(results.sort_values('std', ascending=False).head(7).Variable.values) + ['kmeans_norm']
+
+# plot data
+tidy = df_scaled[selected_columns].melt(id_vars='kmeans_norm')
+fig, ax = plt.subplots(figsize=(15, 5))
+sns.barplot(x='kmeans_norm', y='value', hue='variable', data=tidy, palette='Set3')
+plt.legend(loc='upper right')
+plt.show()
 
 # 9  Differences in type of trees in different areas
 trees_type_dif = trees_new.groupby(by=['ARROND_NOM', 'ESSENCE_ANG'],
