@@ -16,85 +16,124 @@ import mca
 # Questions
 
 # 1 Comparison between on-road and off-road trees:
-no_on_off_road = trees_new['INV_TYPE'].value_counts()
+
+
+def question_1():
+    no_on_off_road = trees_new['INV_TYPE'].value_counts()
+    print(no_on_off_road)
 
 # 2 Top 3 areas with most trees
-areas = trees_new['ARROND_NOM'].value_counts()
+
+
+def question_2():
+    areas = trees_new['ARROND_NOM'].value_counts()
 
 # 3 Top 3 most planted trees
-trees_type = trees_new['ESSENCE_ANG'].value_counts()
-top_10_trees = list(trees_type[:10].index)
+
+
+def question_3():
+    trees_type = trees_new['ESSENCE_ANG'].value_counts()
+    top_10_trees = list(trees_type[:10].index)
+    print("Trees count:", trees_type)
+    print('Top 10 trees:', top_10_trees)
 
 # 4 Type of earth where trees are most planted
-earth_type = trees_new['place'].value_counts()
+
+
+def question_4():
+    earth_type = trees_new['place'].value_counts()
+    print(earth_type)
 
 # 6 Compare the DHP of trees in different areas
-box_plot = trees_new.boxplot(column=['DHP'], by=['ARROND_NOM'], fontsize=8)
-ax = sns.boxplot(x='ARROND_NOM', y='DHP', data=trees_new)
-ax.set_xticklabels(ax.get_xticklabels(), rotation=40, ha="right")
-plt.close()
 
-histo = sns.displot(trees_new, x='DHP', hue='ARROND_NOM', kind='kde',
-                    fill=True,
-                    height=5, aspect=5)
-plt.close()
+
+def question_10(option):
+    """Display box plot or histogram"""
+    if option == 'box':
+        box_plot = trees_new.boxplot(column=['DHP'], by=['ARROND_NOM'], fontsize=8)
+        ax = sns.boxplot(x='ARROND_NOM', y='DHP', data=trees_new)
+        ax.set_xticklabels(ax.get_xticklabels(), rotation=40, ha="right")
+        plt.show()
+    elif option == 'histo':
+        histo = sns.displot(trees_new, x='DHP', hue='ARROND_NOM', kind='kde',
+                            fill=True,
+                            height=5, aspect=5)
+        plt.show()
 
 # 5 95% Confidence interval for DHP of trees.
-std = trees_new['DHP'].std()
-mean = trees_new['DHP'].mean()
-n = trees_new['DHP'].count()
-multiplier = std/sqrt(n)
-fig, ax = plt.subplots()
-sns.histplot(trees_new, x='DHP').set_title('Distribution plot of trees diameter')
-ax.set_xlim(0, 120)
-plt.close()
-CI_mtl = 'Confidence interval of Montreal trees: [{0:2f}, {1:2f}]'\
-    .format(mean-1.96*multiplier, mean+1.96*multiplier)
+
+
+def question_5(option):
+    std = trees_new['DHP'].std()
+    mean = trees_new['DHP'].mean()
+    n = trees_new['DHP'].count()
+    multiplier = std / sqrt(n)
+    if option is True:
+        fig, ax = plt.subplots()
+        sns.histplot(trees_new, x='DHP').set_title('Distribution plot of trees diameter')
+        ax.set_xlim(0, 120)
+        plt.show()
+    else:
+        ci_mtl = 'Confidence interval of Montreal trees: [{0:2f}, {1:2f}]'\
+            .format(mean-1.96*multiplier, mean+1.96*multiplier)
+        print('95% confidence interval for DHP of trees: {}'.format(ci_mtl) )
 
 # 6 DHP measure of the trees on road and off road
-on_road = trees_new.loc[trees_new['INV_TYPE'] == 'R']
-off_road = trees_new.loc[trees_new['INV_TYPE'] == 'H']
 
-on_road_place = on_road['Emplacement'].value_counts()
-off_road_place = off_road['Emplacement'].value_counts()
 
-fig, ax = plt.subplots()
-on_road_plot = sns.histplot(on_road, x='DHP', label='on_road', color='red')
-off_road_plot = sns.histplot(off_road, x='DHP', label='off_road', color='blue')
-ax.set_xlim(0, 120)
-plt.title('Distribution plot of on and off road trees')
-plt.legend()
-plt.close()
+def question_6(option):
+    on_road = trees_new.loc[trees_new['INV_TYPE'] == 'R']
+    off_road = trees_new.loc[trees_new['INV_TYPE'] == 'H']
 
-box_plot_on_off = sns.boxplot(x='INV_TYPE', y='DHP', data=trees_new)
-plt.title('Box plot of on and off road trees')
-plt.close()
+    on_road_place = on_road['Emplacement'].value_counts()
+    off_road_place = off_road['Emplacement'].value_counts()
 
-std_on_road = on_road['DHP'].std()
-std_off_road = off_road['DHP'].std()
+    std_on_road = on_road['DHP'].std()
+    std_off_road = off_road['DHP'].std()
 
-mean_on_road = on_road['DHP'].mean()
-mean_off_road = off_road['DHP'].mean()
+    mean_on_road = on_road['DHP'].mean()
+    mean_off_road = off_road['DHP'].mean()
 
-n_on_road = on_road['DHP'].count()
-n_off_road = off_road['DHP'].count()
+    n_on_road = on_road['DHP'].count()
+    n_off_road = off_road['DHP'].count()
 
-multiplier_on_road = std/sqrt(n_on_road)
-multiplier_off_road = std/sqrt(n_off_road)
+    multiplier_on_road = std_on_road / sqrt(n_on_road)
+    multiplier_off_road = std_off_road / sqrt(n_off_road)
 
-CI_mtl_road = 'Confidence interval of on road trees: [{0:2f}, {1:2f}]'.\
-    format(mean_on_road - 1.96*multiplier_on_road,
-           mean_on_road + 1.96*multiplier_on_road)
-CI_mtl_off_road = 'Confidence interval of off road trees: [{0:2f}, {1:2f}]'\
-    .format(mean_off_road - 1.96*multiplier_off_road,
-            mean_off_road + 1.96*multiplier_off_road)
+    if option is True:
+        fig, ax = plt.subplots()
+        on_road_plot = sns.histplot(on_road, x='DHP', label='on_road', color='red')
+        off_road_plot = sns.histplot(off_road, x='DHP', label='off_road', color='blue')
+        ax.set_xlim(0, 120)
+        plt.title('Distribution plot of on and off road trees')
+        plt.legend()
+        plt.close()
+
+        box_plot_on_off = sns.boxplot(x='INV_TYPE', y='DHP', data=trees_new)
+        plt.title('Box plot of on and off road trees')
+        plt.close()
+    else:
+        CI_mtl_road = 'Confidence interval of on road trees: [{0:2f}, {1:2f}]'.\
+            format(mean_on_road - 1.96*multiplier_on_road,
+                   mean_on_road + 1.96*multiplier_on_road)
+
+        CI_mtl_off_road = 'Confidence interval of ' \
+                          'off road trees: [{0:2f}, {1:2f}]'\
+            .format(mean_off_road - 1.96*multiplier_off_road,
+                    mean_off_road + 1.96*multiplier_off_road)
+        print(CI_mtl_off_road, CI_mtl_road)
 
 # 7 Profile the placement of the trees
-box_plot_place = sns.boxplot(x='place', y='DHP', data=trees_new)
-plt.title('Box plot of different trees placements')
-plt.close()
+
+
+def question_7():
+    box_plot_place = sns.boxplot(x='place', y='DHP', data=trees_new)
+    plt.title('Box plot of different trees placements')
+    plt.show()
 
 # 8 Clustering to identify group of trees
+
+top_10_trees = list(trees_new['ESSENCE_ANG'].value_counts()[:10].index)
 cluster_df = trees_new[['INV_TYPE', 'place', 'DHP', 'ARROND_NOM', 'ESSENCE_ANG']]
 cluster_df = cluster_df[cluster_df['ESSENCE_ANG'].isin(top_10_trees)]
 
