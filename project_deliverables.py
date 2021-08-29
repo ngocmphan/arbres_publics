@@ -48,7 +48,9 @@ def question_4():
 
 
 def question_10(option):
-    """Display box plot or histogram"""
+    """ Question 10:
+    Option "box": Display box plot of DHP by boroughs.
+    Option "histo": Display histogram plot of DHP by boroughs """
     if option == 'box':
         box_plot = trees_new.boxplot(column=['DHP'], by=['ARROND_NOM'], fontsize=8)
         ax = sns.boxplot(x='ARROND_NOM', y='DHP', data=trees_new)
@@ -64,6 +66,10 @@ def question_10(option):
 
 
 def question_5(option):
+    """ Question 5:
+    If option is inputted: Display distribution plot of trees diameter.
+    If option is not indicated: 95% Confidence interval of trees diameter.
+    """
     std = trees_new['DHP'].std()
     mean = trees_new['DHP'].mean()
     n = trees_new['DHP'].count()
@@ -82,6 +88,11 @@ def question_5(option):
 
 
 def question_6(option):
+    """Question 6:
+    If Option is inputted: Display distribution plot of on and off road trees,
+     and box plot of on and off road trees.
+    Option not indicated: 95% Confidence interval of on and off road trees.
+     """
     on_road = trees_new.loc[trees_new['INV_TYPE'] == 'R']
     off_road = trees_new.loc[trees_new['INV_TYPE'] == 'H']
 
@@ -107,11 +118,10 @@ def question_6(option):
         ax.set_xlim(0, 120)
         plt.title('Distribution plot of on and off road trees')
         plt.legend()
-        plt.close()
 
         box_plot_on_off = sns.boxplot(x='INV_TYPE', y='DHP', data=trees_new)
         plt.title('Box plot of on and off road trees')
-        plt.close()
+        plt.show()
     else:
         CI_mtl_road = 'Confidence interval of on road trees: [{0:2f}, {1:2f}]'.\
             format(mean_on_road - 1.96*multiplier_on_road,
@@ -251,7 +261,7 @@ for x in trees_new['ARROND_NOM'].unique():
 
 
 # 14 Sufficiency of green scenery on meeting population needs
-def question_14(option):
+def question_14():
     population = 4247000
     population_needs = population*7.5
     trees = trees_new['EMP_NO'].count()
