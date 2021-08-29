@@ -224,11 +224,15 @@ for column in df_mean.columns[1:]:
 selected_columns = list(results.sort_values('std', ascending=False).head(7).Variable.values) + ['kmeans_norm']
 
 # plot data
-tidy = df_scaled[selected_columns].melt(id_vars='kmeans_norm')
-fig, ax = plt.subplots(figsize=(15, 5))
-sns.barplot(x='kmeans_norm', y='value', hue='variable', data=tidy, palette='Set3')
-plt.legend(loc='upper right')
-plt.show()
+
+
+def cluster_result():
+    tidy = df_scaled[selected_columns].melt(id_vars='kmeans_norm')
+    fig, ax = plt.subplots(figsize=(15, 5))
+    sns.barplot(x='kmeans_norm', y='value', hue='variable', data=tidy, palette='Set3')
+    plt.legend(loc='upper right')
+    plt.show()
+
 
 # 9  Differences in type of trees in different areas
 trees_type_dif = trees_new.groupby(by=['ARROND_NOM', 'ESSENCE_ANG'],
@@ -244,3 +248,23 @@ for x in trees_new['ARROND_NOM'].unique():
     area = trees_new.loc[trees_new['ARROND_NOM'] == x]
     area_trees = area['ESSENCE_ANG'].value_counts().head(2)
     # print('Area:', x, '\\', 'Most planted:', area_trees)
+
+
+# 14 Sufficiency of green scenery on meeting population needs
+def question_14(option):
+    if option == 'general':
+        population = 4247000
+        population_needs = population*7.5
+        trees = trees_new['EMP_NO'].count()
+        sufficiency = trees*100/population_needs
+        print(population_needs)
+        print(sufficiency)
+    elif option == 'Ville_Marie':
+        # population of the area
+        # population needs
+        # trees in the area
+
+        # sufficiency
+        return
+
+
