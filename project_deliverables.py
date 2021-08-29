@@ -252,6 +252,14 @@ for x in trees_new['ARROND_NOM'].unique():
 
 # 14 Sufficiency of green scenery on meeting population needs
 def question_14(option):
+    """Question 14 option:
+    General - for general understanding of sufficiency of trees in Montreal
+    for the population;
+    no indication - understanding of specific district.
+
+    Warning: Missing/incorrect data for Ile Bizard-sainte Genevieve,
+    Montreal Nord, Outremont.
+    """
     if option == 'general':
         population = 4247000
         population_needs = population*7.5
@@ -259,12 +267,24 @@ def question_14(option):
         sufficiency = trees*100/population_needs
         print(population_needs)
         print(sufficiency)
-    elif option == 'Ville_Marie':
-        # population of the area
-        # population needs
+    else:
         # trees in the area
+        trees_by_area = trees_new.groupby('ARROND_NOM')[
+            'ESSENCE_ANG'].count().reset_index()
+        # population of the area
+        trees_by_area['pop_2016'] = [134245, 42796, 166520, 76853, 104000,
+                                     78151,
+                                     136024, 3850, 69297, 106734 - 3850, 139590,
+                                     98828,
+                                     78305, 69229, 89170, 143853]
+        trees_by_area['pop_2021'] = trees_by_area['pop_2016'] * 1.035
+        # population needs
+        trees_by_area['population_needs'] = trees_by_area['pop_2021'] * 7.5
 
         # sufficiency
-        return
+        trees_by_area['sufficiency_rate'] = trees_by_area['ESSENCE_ANG']*100 / \
+                                            trees_by_area['population_needs']
+
+        print(trees_by_area)
 
 
