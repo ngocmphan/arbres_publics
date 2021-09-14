@@ -27,7 +27,7 @@ def question_1():
 
 def question_2():
     areas = trees_new['ARROND_NOM'].value_counts()
-
+    print(areas)
 # 3 Top 3 most planted trees
 
 
@@ -245,19 +245,19 @@ def cluster_result():
 
 
 # 9  Differences in type of trees in different areas
-trees_type_dif = trees_new.groupby(by=['ARROND_NOM', 'ESSENCE_ANG'],
-                                   sort=True,
-                                   as_index=False)['ESSENCE_ANG'].count()
 
-ahuntsic = trees_new.loc[trees_new['ARROND_NOM'] == 'Ahuntsic - Cartierville']
-ahuntsic_tree = ahuntsic['ESSENCE_ANG'].value_counts()
-ahuntsic_tree_2 = ahuntsic.groupby('ESSENCE_ANG', as_index=False).count().max()
-ahuntsic_test = ahuntsic.loc[ahuntsic['ESSENCE_ANG'] == 'spruce Iseli Fastigiata']
-
-for x in trees_new['ARROND_NOM'].unique():
-    area = trees_new.loc[trees_new['ARROND_NOM'] == x]
-    area_trees = area['ESSENCE_ANG'].value_counts().head(2)
-    # print('Area:', x, '\\', 'Most planted:', area_trees)
+def question_9():
+    trees_by_area = {}
+    for x in trees_new['ARROND_NOM'].unique():
+        area = trees_new.loc[trees_new['ARROND_NOM'] == x]
+        area_trees = area['ESSENCE_ANG'].value_counts().head(3).index
+        area_dict = {x: list(area_trees)}
+        trees_by_area.update(area_dict)
+    trees_name_area = pd.DataFrame.from_dict(trees_by_area, orient='index',
+                                             columns=['First', 'Second',
+                                                      'Third'])
+    print(trees_name_area['First'], trees_name_area['Second'],
+          trees_name_area['Third'])
 
 
 # 14 Sufficiency of green scenery on meeting population needs
@@ -291,3 +291,6 @@ def question_15():
                                         trees_by_area['population_needs']
 
     print(trees_by_area)
+
+
+question_9()
