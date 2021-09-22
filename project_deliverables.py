@@ -121,105 +121,102 @@ def question_6():
 
 # 7 Clustering to identify group of trees
 
-top_10_trees = list(trees_new['ESSENCE_ANG'].value_counts()[:10].index)
-cluster_df = trees_new[['INV_TYPE', 'place', 'DHP', 'ARROND_NOM', 'ESSENCE_ANG']]
-cluster_df = cluster_df[cluster_df['ESSENCE_ANG'].isin(top_10_trees)]
 
+def question_7():
+    top_10_trees = list(trees_new['ESSENCE_ANG'].value_counts()[:10].index)
+    cluster_df = trees_new[['INV_TYPE', 'place', 'DHP', 'ARROND_NOM', 'ESSENCE_ANG']]
+    cluster_df = cluster_df[cluster_df['ESSENCE_ANG'].isin(top_10_trees)]
 
-def cluster_processing(df):
-    """ Processing data frame for cluster kmean: trees_type, place, trees
-    name, borough name"""
-    columns = ['place', 'ARROND_NOM', 'ESSENCE_ANG']
-    df.loc[:, 'INV_TYPE'] = df.loc[:, 'INV_TYPE'].replace({"H": 0, "R": 1})
-    df = pd.get_dummies(data=df, columns=columns)
-    return df
+    def cluster_processing(df):
+        """ Processing data frame for cluster kmean: trees_type, place, trees
+        name, borough name"""
+        columns = ['place', 'ARROND_NOM', 'ESSENCE_ANG']
+        df.loc[:, 'INV_TYPE'] = df.loc[:, 'INV_TYPE'].replace({"H": 0, "R": 1})
+        df = pd.get_dummies(data=df, columns=columns)
+        return df
 
+    def plot_corr(df):
+        corr = df.corr()
+        mask = np.zeros_like(corr, dtype=np.bool8)
+        mask[np.triu_indices_from(mask)] = True
+        f, ax = plt.subplots(figsize=(11, 9))
+        cmap = sns.diverging_palette(220,10, as_cmap=True)
+        sns.heatmap(corr, mask=mask, cmap= cmap, vmax=0.3, center=0,
+                    square=True)
+        plt.title('Correlation plot')
+        return
 
-def plot_corr(df):
-    corr = df.corr()
-    mask = np.zeros_like(corr, dtype=np.bool8)
-    mask[np.triu_indices_from(mask)] = True
-    f, ax = plt.subplots(figsize=(11, 9))
-    cmap = sns.diverging_palette(220,10, as_cmap=True)
-    sns.heatmap(corr, mask=mask, cmap= cmap, vmax=0.3, center=0,
-                square=True)
-    plt.title('Correlation plot')
-    return
+    cluster_data = cluster_processing(cluster_df)
+    # Non-normalized k-means
 
+    def non_norm_kmeans():
+        scores = [KMeans(n_clusters=i + 2).fit(cluster_data).inertia_ for i in
+                  range(10)]
+        sns.lineplot(x=np.arange(2, 12), y=scores)
+        plt.xlabel('Number of clusters')
+        plt.ylabel('Inertia')
+        plt.title('Inertia vs Number of clusters kmeans')
+        plt.show()
 
-cluster_data = cluster_processing(cluster_df)
-# Non-normalized k-means
+    kmeans = KMeans(n_clusters=4).fit(cluster_data)
 
+    # Normalized k-means
 
-def non_norm_kmeans():
-    scores = [KMeans(n_clusters=i + 2).fit(cluster_data).inertia_ for i in
-              range(10)]
-    sns.lineplot(x=np.arange(2, 12), y=scores)
-    plt.xlabel('Number of clusters')
-    plt.ylabel('Inertia')
-    plt.title('Inertia vs Number of clusters kmeans')
-    plt.show()
+    def norm_kmeans():
+        normalized_vector = preprocessing.normalize(cluster_data)
+        normalized_scores = [KMeans(n_clusters=i+2).fit(normalized_vector).inertia_ for i in range(10)]
+        sns.lineplot(x=np.arange(2, 12), y=normalized_scores)
+        plt.xlabel('Number of clusters')
+        plt.ylabel('Inertia')
+        plt.title('Inertia vs Number of clusters kmeans')
+        plt.show()  # 4 or 5 clusters
 
-
-kmeans = KMeans(n_clusters=4).fit(cluster_data)
-
-# Normalized k-means
-
-
-def norm_kmeans():
     normalized_vector = preprocessing.normalize(cluster_data)
-    normalized_scores = [KMeans(n_clusters=i+2).fit(normalized_vector).inertia_ for i in range(10)]
-    sns.lineplot(x=np.arange(2, 12), y=normalized_scores)
-    plt.xlabel('Number of clusters')
-    plt.ylabel('Inertia')
-    plt.title('Inertia vs Number of clusters kmeans')
-    plt.show()  # 4 or 5 clusters
+    normalized_kmeans = KMeans(n_clusters=4).fit(normalized_vector)
 
+    # clustering: DBSCAN
 
-normalized_vector = preprocessing.normalize(cluster_data)
-normalized_kmeans = KMeans(n_clusters=4).fit(normalized_vector)
+    def dbscan():
+        min_samples = cluster_data.shape[1]+1
+        dbscan = DBSCAN(eps=6, min_samples=min_samples).fit(cluster_data)
+        print(dbscan.labels_.unique())
+    # Evaluations
 
-# clustering: DBSCAN
+    def evaluation():
+        eva_kmeans = silhouette_score(cluster_data, kmeans.labels_,
+                                      metric='euclidean',
+                                      sample_size=1000)
+        print(eva_kmeans)
+        eva_normalized = silhouette_score(normalized_vector,
+                                          normalized_kmeans.labels_,
+                                          metric='cosine', sample_size=1000)
+        print(eva_normalized)
 
+    # Unique features
+    scaler = MinMaxScaler()
+    df_scaled = pd.DataFrame(scaler.fit_transform(cluster_data))
+    df_scaled.columns = cluster_data.columns
+    df_scaled['kmeans_norm'] = normalized_kmeans.labels_
 
-def dbscan():
-    min_samples = cluster_data.shape[1]+1
-    dbscan = DBSCAN(eps=6, min_samples=min_samples).fit(cluster_data)
-    print(dbscan.labels_.unique())
-# Evaluations
+    df_mean = df_scaled.loc[df_scaled['kmeans_norm'] != -1, :]\
+        .groupby('kmeans_norm').mean().reset_index()
+    results = pd.DataFrame(columns=['Variable', 'std'])
+    for column in df_mean.columns[1:]:
+        results.loc[len(results), :] = [column, np.std(df_mean[column])]
+    selected_columns = list(results.sort_values('std', ascending=False)
+                            .head(7).Variable.values) + ['kmeans_norm']
 
+    # plot data
 
-def evaluation():
-    eva_kmeans = silhouette_score(cluster_data, kmeans.labels_, metric='euclidean',
-                                  sample_size=1000)
-    print(eva_kmeans)
-    eva_normalized = silhouette_score(normalized_vector, normalized_kmeans.labels_,
-                                      metric='cosine', sample_size=1000)
-    print(eva_normalized)
+    def cluster_result():
+        tidy = df_scaled[selected_columns].melt(id_vars='kmeans_norm')
+        fig, ax = plt.subplots(figsize=(15, 5))
+        sns.barplot(x='kmeans_norm', y='value', hue='variable', data=tidy,
+                    palette='Set3')
+        plt.legend(loc='upper right')
+        plt.show()
 
-
-# Unique features
-scaler = MinMaxScaler()
-df_scaled = pd.DataFrame(scaler.fit_transform(cluster_data))
-df_scaled.columns = cluster_data.columns
-df_scaled['kmeans_norm'] = normalized_kmeans.labels_
-
-df_mean = df_scaled.loc[df_scaled['kmeans_norm'] != -1, :]\
-    .groupby('kmeans_norm').mean().reset_index()
-results = pd.DataFrame(columns=['Variable', 'std'])
-for column in df_mean.columns[1:]:
-    results.loc[len(results), :] = [column, np.std(df_mean[column])]
-selected_columns = list(results.sort_values('std', ascending=False).head(7).Variable.values) + ['kmeans_norm']
-
-# plot data
-
-
-def cluster_result():
-    tidy = df_scaled[selected_columns].melt(id_vars='kmeans_norm')
-    fig, ax = plt.subplots(figsize=(15, 5))
-    sns.barplot(x='kmeans_norm', y='value', hue='variable', data=tidy, palette='Set3')
-    plt.legend(loc='upper right')
-    plt.show()
+    cluster_result()
 
 
 # 8 Top 3 areas with most trees
