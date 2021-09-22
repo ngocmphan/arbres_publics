@@ -28,9 +28,25 @@ def question_1():
 
 def question_2():
     trees_type = trees_new['ESSENCE_ANG'].value_counts()
-    top_10_trees = list(trees_type[:10].index)
-    print("Trees count:", trees_type)
-    print('Top 10 trees:', top_10_trees)
+    top_10_trees = list(trees_type[:15].index)
+    trees_type_df = pd.DataFrame(trees_type).reset_index()
+    trees_type_df = trees_type_df.rename(columns={'ESSENCE_ANG': 'count',
+                                                  'index': 'ESSENCE_ANG'})
+    # print("Trees count:", trees_type)
+    # print('Top 10 trees:', top_10_trees)
+    top_trees = {}
+    values = 0
+    for index, row in trees_type_df.iterrows():
+        if row['ESSENCE_ANG'] in top_10_trees:
+            top_trees.update({row['ESSENCE_ANG']: row['count']})
+        else:
+            values += row['count']
+            top_trees.update({'other': values})
+    top_trees_df = pd.DataFrame(top_trees.items(),
+                                columns=['ESSENCE_ANG', 'count'])
+    print(top_trees)
+    print(top_trees_df)
+
 
 # 3 Type of earth where trees are most planted
 
@@ -295,3 +311,4 @@ def question_15():
     print(trees_by_area)
 
 
+question_2()
