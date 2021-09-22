@@ -22,50 +22,28 @@ def question_1():
     no_on_off_road = trees_new['INV_TYPE'].value_counts()
     print(no_on_off_road)
 
-# 2 Top 3 areas with most trees
+
+# 2 Top 3 most planted trees
 
 
 def question_2():
-    areas = trees_new['ARROND_NOM'].value_counts()
-    print(areas)
-# 3 Top 3 most planted trees
-
-
-def question_3():
     trees_type = trees_new['ESSENCE_ANG'].value_counts()
     top_10_trees = list(trees_type[:10].index)
     print("Trees count:", trees_type)
     print('Top 10 trees:', top_10_trees)
 
-# 4 Type of earth where trees are most planted
+# 3 Type of earth where trees are most planted
 
 
-def question_4():
+def question_3():
     earth_type = trees_new['place'].value_counts()
     print(earth_type)
 
-# 6 Compare the DHP of trees in different areas
+
+# 4 95% Confidence interval for DHP of trees.
 
 
-def question_10(option):
-    """ Question 10:
-    Option "box": Display box plot of DHP by boroughs.
-    Option "histo": Display histogram plot of DHP by boroughs """
-    if option == 'box':
-        box_plot = trees_new.boxplot(column=['DHP'], by=['ARROND_NOM'], fontsize=8)
-        ax = sns.boxplot(x='ARROND_NOM', y='DHP', data=trees_new)
-        ax.set_xticklabels(ax.get_xticklabels(), rotation=40, ha="right")
-        plt.show()
-    elif option == 'histo':
-        histo = sns.displot(trees_new, x='DHP', hue='ARROND_NOM', kind='kde',
-                            fill=True,
-                            height=5, aspect=5)
-        plt.show()
-
-# 5 95% Confidence interval for DHP of trees.
-
-
-def question_5(option):
+def question_4(option):
     """ Question 5:
     If option is inputted: Display distribution plot of trees diameter.
     If option is not indicated: 95% Confidence interval of trees diameter.
@@ -84,10 +62,10 @@ def question_5(option):
             .format(mean-1.96*multiplier, mean+1.96*multiplier)
         print('95% confidence interval for DHP of trees: {}'.format(ci_mtl) )
 
-# 6 DHP measure of the trees on road and off road
+# 5 DHP measure of the trees on road and off road
 
 
-def question_6(option):
+def question_5(option):
     """Question 6:
     If Option is inputted: Display distribution plot of on and off road trees,
      and box plot of on and off road trees.
@@ -133,15 +111,15 @@ def question_6(option):
                     mean_off_road + 1.96*multiplier_off_road)
         print(CI_mtl_off_road, CI_mtl_road)
 
-# 7 Profile the placement of the trees
+# 6 Profile the placement of the trees
 
 
-def question_7():
+def question_6():
     box_plot_place = sns.boxplot(x='place', y='DHP', data=trees_new)
     plt.title('Box plot of different trees placements')
     plt.show()
 
-# 8 Clustering to identify group of trees
+# 7 Clustering to identify group of trees
 
 top_10_trees = list(trees_new['ESSENCE_ANG'].value_counts()[:10].index)
 cluster_df = trees_new[['INV_TYPE', 'place', 'DHP', 'ARROND_NOM', 'ESSENCE_ANG']]
@@ -244,6 +222,14 @@ def cluster_result():
     plt.show()
 
 
+# 8 Top 3 areas with most trees
+
+
+def question_8():
+    areas = trees_new['ARROND_NOM'].value_counts()
+    print(areas)
+
+
 # 9  Differences in type of trees in different areas
 
 def question_9():
@@ -258,6 +244,25 @@ def question_9():
                                                       'Third'])
     print(trees_name_area['First'], trees_name_area['Second'],
           trees_name_area['Third'])
+
+
+# 10 Compare the DHP of trees in different areas
+
+
+def question_10(option):
+    """ Question 10:
+    Option "box": Display box plot of DHP by boroughs.
+    Option "histo": Display histogram plot of DHP by boroughs """
+    if option == 'box':
+        box_plot = trees_new.boxplot(column=['DHP'], by=['ARROND_NOM'], fontsize=8)
+        ax = sns.boxplot(x='ARROND_NOM', y='DHP', data=trees_new)
+        ax.set_xticklabels(ax.get_xticklabels(), rotation=40, ha="right")
+        plt.show()
+    elif option == 'histo':
+        histo = sns.displot(trees_new, x='DHP', hue='ARROND_NOM', kind='kde',
+                            fill=True,
+                            height=5, aspect=5)
+        plt.show()
 
 
 # 14 Sufficiency of green scenery on meeting population needs
@@ -293,4 +298,3 @@ def question_15():
     print(trees_by_area)
 
 
-question_9()
