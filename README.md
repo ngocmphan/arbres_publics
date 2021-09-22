@@ -48,7 +48,6 @@ Abres publics sur le territoire de la Ville. Ville de Montréal. Data updated on
 ### Quantitative deliverables
 #### Trees profile
 * Types of trees most planted: on road versus off road
-* What are the top 3 areas with most trees?
 * In general, what are the most planted trees?
 * In general, what are the types of land that trees were most planted on?
 * Confidence interval for DHP of trees.  
@@ -56,6 +55,7 @@ Abres publics sur le territoire de la Ville. Ville de Montréal. Data updated on
 * Profile the placements of trees. 
 * Conduct unsupervised learning - clustering to identify groups of trees. 
 #### Area differences
+* What are the top 3 areas with most trees?
 * Is there any difference in the types of trees planted in different areas?
 * On average, how big are the trees in different areas? Compare.
 * Confidence interval for DHP of trees for each tree type
