@@ -6,7 +6,7 @@ print(trees_new['ARROND_NOM'].unique())
 trees_borough = trees_new[trees_new['ARROND_NOM'] ==
                           'Rosemont - La Petite-Patrie']
 trees_road = trees_borough[trees_borough['INV_TYPE'] == 'R']
-trees_placement = trees_road[trees_road['place'] == 'banquette']
+trees_placement = trees_road[trees_road['place'] == 'parc']
 trees_viz = trees_placement.dropna(subset=['Longitude', 'Latitude'], axis=0)
 trees_viz = trees_viz[['Longitude', 'Latitude']]
 
