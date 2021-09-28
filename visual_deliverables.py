@@ -26,6 +26,18 @@ m.save(outfile='maps_of_trees.html')
 
 
 def viz_map(borough, inv, place):
+    """Creating interactive folium map by borough name, type, and placement:
+
+    Parameters
+    ----------
+    borough : Name of the boroughs - 16 boroughs
+    inv     : "R" - on road, "H" - off road
+    place   : Placement of the trees - 8 placements
+
+    Returns
+    ---------
+    Interactive visualization map
+    """
     # Selecting vars
     trees_borough = trees_new[trees_new['ARROND_NOM'] ==
                               borough]
