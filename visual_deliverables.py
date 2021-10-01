@@ -14,7 +14,7 @@ def viz_map_option(item):
     return
 
 
-def viz_map(borough, inv, place):
+def viz_map(inv, place, borough='Rosemont - La Petite-Patrie'):
     """Creating interactive folium map by borough name, type, and placement:
 
     Parameters
@@ -46,8 +46,25 @@ def viz_map(borough, inv, place):
         location = [row['Latitude'], row['Longitude']]
         folium.Marker(location, tooltip=location).add_to(m)
 
-    m.save(outfile=''.format(borough, inv, place))
+    m.save(outfile='Trees in {name} on {road} on {placement}.html'
+           .format(name=borough, road=inv, placement=place))
     return
 
 
+viz_map_option('a')
 
+viz_map('R', 'parterre')
+viz_map('R', 'banquette')
+viz_map('R', 'terre-plein')
+viz_map('R', 'trottoir')
+viz_map('R', 'parc')
+viz_map('R', 'saillie')
+viz_map('R', 'îlot de verdure')
+
+viz_map('H', 'parterre')
+viz_map('H', 'banquette')
+viz_map('H', 'terre-plein')
+viz_map('H', 'trottoir')
+viz_map('H', 'parc')
+viz_map('H', 'saillie')
+viz_map('H', 'îlot de verdure')
