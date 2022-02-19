@@ -311,4 +311,3 @@ def question_15():
     print(trees_by_area)
 
 
-question_2()
