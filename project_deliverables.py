@@ -78,6 +78,12 @@ def question_4(option):
             .format(mean-1.96*multiplier, mean+1.96*multiplier)
         print('95% confidence interval for DHP of trees: {}'.format(ci_mtl) )
 
+
+def question_4a():
+    fig, ax = plt.subplots()
+    sns.boxplot(y='DHP', data=trees_new)
+    plt.show()
+
 # 5 DHP measure of the trees on road and off road
 
 
@@ -311,3 +317,4 @@ def question_15():
     print(trees_by_area)
 
 
+question_4a()
