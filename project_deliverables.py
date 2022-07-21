@@ -12,6 +12,7 @@ from sklearn import preprocessing
 from sklearn.metrics import silhouette_score
 from sklearn.preprocessing import MinMaxScaler
 import mca
+from pylab import *
 
 # Questions
 
@@ -80,9 +81,19 @@ def question_4(option):
 
 
 def question_4a():
-    fig, ax = plt.subplots()
-    sns.boxplot(y='DHP', data=trees_new)
-    plt.show()
+    box = boxplot(x='DHP',data=trees_new, vert=False)
+    for line in box['medians']:
+        x, y = line.get_xydata()[1]
+        text(x,y, '%.1f'% x, horizontalalignment='center')
+    for line in box['boxes']:
+        x, y = line.get_xydata()[0]
+        text(x, y, '%.1f'% x, horizontalalignment='center',
+             verticalalignment='top')
+        x, y = line.get_xydata()[3]
+        text(x, y, '%.1f'% x, horizontalalignment='center',
+             verticalalignment='top')
+    show()
+
 
 # 5 DHP measure of the trees on road and off road
 
