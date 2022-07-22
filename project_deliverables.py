@@ -65,6 +65,7 @@ def question_2b():
                                          'index': "ESSENCE_ANG"})
     maple_tree = trees_type_df[trees_type_df['ESSENCE_ANG'].str.contains('Maple')]
     print(sum(maple_tree['count']))
+    print(len(maple_tree['ESSENCE_ANG'].unique()))
 
 
 # 3 Type of earth where trees are most planted
