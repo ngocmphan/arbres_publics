@@ -34,7 +34,7 @@ def question_2():
     trees_type_df = pd.DataFrame(trees_type).reset_index()
     trees_type_df = trees_type_df.rename(columns={'ESSENCE_ANG': 'count',
                                                   'index': 'ESSENCE_ANG'})
-    # Create dataframe with top 15 trees, and other with remaining:
+    # Create dataframe with top 15 trees, and remaining in "others":
     top_trees = {}
     values = 0
     for index, row in trees_type_df.iterrows():
