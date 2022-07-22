@@ -34,8 +34,7 @@ def question_2():
     trees_type_df = pd.DataFrame(trees_type).reset_index()
     trees_type_df = trees_type_df.rename(columns={'ESSENCE_ANG': 'count',
                                                   'index': 'ESSENCE_ANG'})
-    # print("Trees count:", trees_type)
-    # print('Top 10 trees:', top_10_trees)
+    # Create dataframe with top 15 trees, and other with remaining:
     top_trees = {}
     values = 0
     for index, row in trees_type_df.iterrows():
@@ -50,8 +49,25 @@ def question_2():
     print(top_trees_df)
 
 
-# 3 Type of earth where trees are most planted
+# 2a Variety of trees
 
+def question_2a():
+    tree_variety = trees_new['ESSENCE_ANG'].unique()
+    print(len(tree_variety))
+
+# 2b Percentage of maple trees population
+
+
+def question_2b():
+    trees_type = trees_new['ESSENCE_ANG'].value_counts()
+    trees_type_df = pd.DataFrame(trees_type).reset_index()
+    trees_type_df = trees_type_df.rename(columns={"ESSENCE_ANG": "count",
+                                         'index': "ESSENCE_ANG"})
+    maple_tree = trees_type_df[trees_type_df['ESSENCE_ANG'].str.contains('Maple')]
+    print(sum(maple_tree['count']))
+
+
+# 3 Type of earth where trees are most planted
 
 def question_3():
     earth_type = trees_new['place'].value_counts()
@@ -337,4 +353,4 @@ def question_15():
     print(trees_by_area)
 
 
-question_4a()
+question_2b()
