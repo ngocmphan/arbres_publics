@@ -11,6 +11,7 @@ from sklearn.cluster import KMeans, DBSCAN
 from sklearn import preprocessing
 from sklearn.metrics import silhouette_score
 from sklearn.preprocessing import MinMaxScaler
+import statistics as stat
 import mca
 from pylab import *
 
@@ -81,17 +82,25 @@ def question_4(option):
 
 
 def question_4a():
-    box = boxplot(x='DHP',data=trees_new, vert=False)
+    box = boxplot(x='DHP', data=trees_new, vert=False)
+    mean = stat.mean(trees_new['DHP'])
     for line in box['medians']:
         x, y = line.get_xydata()[1]
-        text(x,y, '%.1f'% x, horizontalalignment='center')
+        text(x,y, '%.1f' % x, horizontalalignment='center')
     for line in box['boxes']:
         x, y = line.get_xydata()[0]
-        text(x, y, '%.1f'% x, horizontalalignment='center',
+        text(x, y, '%.1f' % x, horizontalalignment='center',
              verticalalignment='top')
         x, y = line.get_xydata()[3]
-        text(x, y, '%.1f'% x, horizontalalignment='center',
+        text(x, y, '%.1f' % x, horizontalalignment='center',
              verticalalignment='top')
+    for line in box['caps']:
+        x, y = line.get_xydata()[0]
+        text(x, y, '%.1f' % x, horizontalalignment='center',
+             verticalalignment='top')
+    text(mean, 1, '%.1f' % mean, horizontalalignment='center',
+         verticalalignment='top')
+
     show()
 
 
