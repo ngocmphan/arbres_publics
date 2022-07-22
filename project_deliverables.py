@@ -98,28 +98,29 @@ def question_4(option):
         print('95% confidence interval for DHP of trees: {}'.format(ci_mtl) )
 
 
+# 4a Box plot of tree population
 def question_4a():
-    box = boxplot(x='DHP', data=trees_new, vert=False)
-    mean = stat.mean(trees_new['DHP'])
-    for line in box['medians']:
-        x, y = line.get_xydata()[1]
-        text(x,y, '%.1f' % x, horizontalalignment='center')
-    for line in box['boxes']:
-        x, y = line.get_xydata()[0]
-        text(x, y, '%.1f' % x, horizontalalignment='center',
-             verticalalignment='top')
-        x, y = line.get_xydata()[3]
-        text(x, y, '%.1f' % x, horizontalalignment='center',
-             verticalalignment='top')
-    for line in box['caps']:
-        x, y = line.get_xydata()[0]
-        text(x, y, '%.1f' % x, horizontalalignment='center',
-             verticalalignment='top')
-    text(mean, 1, '%.1f' % mean, horizontalalignment='center',
-         verticalalignment='top')
+    box = plt.boxplot(x=trees_new['DHP'], showmeans=True, meanline=True)
+    plt.title('Boxplot of tree population in Greater Montreal Area')
+    median = [line.get_data() for line in box['medians']][0]
+    text(median[0][1]+0.05, median[1][0]-4, '%.1f' % median[1][0],
+         horizontalalignment='right', verticalalignment='center')
+    mean = [line.get_data() for line in box['means']][0]
+    text(mean[0][1]+0.05, mean[1][0]+3, '%.1f' % mean[1][0],
+         horizontalalignment='right', verticalalignment='center')
+    upper_cap = [line.get_data() for line in box['caps']][0]
+    lower_cap = [line.get_data() for line in box['caps']][1]
+    text(upper_cap[0][1]+0.05, upper_cap[1][0], '%.1f' % upper_cap[1][0],
+         horizontalalignment='right', verticalalignment='center')
+    text(lower_cap[0][1]+0.05, lower_cap[1][0], '%.1f' % lower_cap[1][0],
+         horizontalalignment='right', verticalalignment='center')
+    plt.show()
 
-    show()
 
+# 4b Box plot of trees types
+def question_4b():
+    box = trees_new.boxplot(by=['ESSENCE_ENG'], column=['DHP'])
+    plt.show()
 
 # 5 DHP measure of the trees on road and off road
 
@@ -354,4 +355,4 @@ def question_15():
     print(trees_by_area)
 
 
-question_2b()
+question_4a()
