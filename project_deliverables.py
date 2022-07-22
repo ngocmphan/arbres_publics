@@ -117,10 +117,31 @@ def question_4a():
     plt.show()
 
 
-# 4b Box plot of trees types
+# 4b Box plot of trees types for top 10 trees
 def question_4b():
-    box = trees_new.boxplot(by=['ESSENCE_ENG'], column=['DHP'])
+    # With outliers
+    trees_type = trees_new['ESSENCE_ANG'].value_counts()
+    top_12_trees = list(trees_type[:12].index)
+    top_12_df = trees_new[trees_new['ESSENCE_ANG'].isin(top_12_trees)]
+    plt.figure()
+    box = sns.boxplot(x='ESSENCE_ANG', y='DHP', data=top_12_df)
+    plt.title("Boxplots of top 12 tree types in GMA with outliers")
+    sns.set(font_scale=0.5)
+    plt.xticks(rotation=20, fontsize=12)
     plt.show()
+
+    # Without outliers
+    plt.figure()
+    plt.title("Boxplots of top 12 tree types in GMA without outliers",
+              fontsize=12)
+    box_without = sns.boxplot(x='ESSENCE_ANG', y='DHP', data=top_12_df,
+                      showfliers=False)
+    sns.set(font_scale=0.5)
+    plt.xticks(rotation=20, fontsize=12)
+    plt.yticks(fontsize=12)
+    plt.ylabel("DHP", fontsize=12)
+    plt.show()
+
 
 # 5 DHP measure of the trees on road and off road
 
@@ -355,4 +376,4 @@ def question_15():
     print(trees_by_area)
 
 
-question_4a()
+question_4b()
