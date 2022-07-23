@@ -351,7 +351,7 @@ def question_10(option):
 
 # 14 Sufficiency of green scenery on meeting population needs
 def question_14():
-    population = 4247000
+    population = 2025928
     population_needs = population*7.5
     trees = trees_new['EMP_NO'].count()
     sufficiency = trees*100/population_needs
