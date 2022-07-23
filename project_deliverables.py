@@ -117,14 +117,15 @@ def question_4a():
     plt.show()
 
 
-# 4b Box plot of trees types for top 10 trees
+# 4b Box plot of trees types for top 12 trees
 def question_4b():
     # With outliers
     trees_type = trees_new['ESSENCE_ANG'].value_counts()
     top_12_trees = list(trees_type[:12].index)
     top_12_df = trees_new[trees_new['ESSENCE_ANG'].isin(top_12_trees)]
     plt.figure()
-    box = sns.boxplot(x='ESSENCE_ANG', y='DHP', data=top_12_df)
+    box = sns.boxplot(x='ESSENCE_ANG', y='DHP', data=top_12_df, showmeans=True,
+                      meanprops={'markeredgecolor': 'black'})
     plt.title("Boxplots of top 12 tree types in GMA with outliers")
     sns.set(font_scale=0.5)
     plt.xticks(rotation=20, fontsize=12)
@@ -135,7 +136,8 @@ def question_4b():
     plt.title("Boxplots of top 12 tree types in GMA without outliers",
               fontsize=12)
     box_without = sns.boxplot(x='ESSENCE_ANG', y='DHP', data=top_12_df,
-                      showfliers=False)
+                      showfliers=False, showmeans=True,
+                              meanprops={'markeredgecolor': 'black'})
     sns.set(font_scale=0.5)
     plt.xticks(rotation=20, fontsize=12)
     plt.yticks(fontsize=12)
