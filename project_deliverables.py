@@ -351,8 +351,10 @@ def question_14():
     population_needs = population*7.5
     trees = trees_new['EMP_NO'].count()
     sufficiency = trees*100/population_needs
+    trees_per_person = trees/population
     print(population_needs)
     print(sufficiency)
+    print(trees_per_person)
 
 
 # 15 Sufficiency by areas
@@ -375,7 +377,11 @@ def question_15():
     trees_by_area['sufficiency_rate'] = trees_by_area['ESSENCE_ANG'] * 100 / \
                                         trees_by_area['population_needs']
 
-    print(trees_by_area)
+    # trees per person by neighborhood
+    trees_by_area['tree_per_person'] = trees_by_area['ESSENCE_ANG'] / \
+                                       trees_by_area['pop_2021']
+    print(trees_by_area['ESSENCE_ANG'])
+    print(trees_by_area[['ARROND_NOM', 'tree_per_person']])
 
 
-question_4b()
+question_14()
