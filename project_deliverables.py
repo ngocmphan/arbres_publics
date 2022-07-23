@@ -31,6 +31,7 @@ def question_1():
 def question_2():
     trees_type = trees_new['ESSENCE_ANG'].value_counts()
     top_10_trees = list(trees_type[:15].index)
+    least_10_trees = list(trees_type[::-1][:10].index)
     trees_type_df = pd.DataFrame(trees_type).reset_index()
     trees_type_df = trees_type_df.rename(columns={'ESSENCE_ANG': 'count',
                                                   'index': 'ESSENCE_ANG'})
@@ -45,8 +46,9 @@ def question_2():
             top_trees.update({'other': values})
     top_trees_df = pd.DataFrame(top_trees.items(),
                                 columns=['ESSENCE_ANG', 'count'])
-    print(top_trees)
-    print(top_trees_df)
+    # print(top_trees)
+    # print(top_trees_df)
+    print(least_10_trees)
 
 
 # 2a Variety of trees
@@ -386,4 +388,4 @@ def question_15():
     print(trees_by_area[['ARROND_NOM', 'tree_per_person']])
 
 
-question_14()
+question_2()
