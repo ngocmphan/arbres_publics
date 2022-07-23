@@ -336,9 +336,11 @@ def question_10(option):
     Option "box": Display box plot of DHP by boroughs.
     Option "histo": Display histogram plot of DHP by boroughs """
     if option == 'box':
-        box_plot = trees_new.boxplot(column=['DHP'], by=['ARROND_NOM'], fontsize=8)
-        ax = sns.boxplot(x='ARROND_NOM', y='DHP', data=trees_new)
-        ax.set_xticklabels(ax.get_xticklabels(), rotation=40, ha="right")
+        ax = sns.boxplot(x='ARROND_NOM', y='DHP', data=trees_new, showmeans=True,
+                         showfliers=False, meanprops={'markeredgecolor': 'black'})
+        ax.set_xticklabels(ax.get_xticklabels(), rotation=20, ha="right")
+        plt.title("Boxplot of DHP by GMA neighborhoods")
+        plt.xticks(fontsize=7)
         plt.show()
     elif option == 'histo':
         histo = sns.displot(trees_new, x='DHP', hue='ARROND_NOM', kind='kde',
@@ -388,4 +390,4 @@ def question_15():
     print(trees_by_area[['ARROND_NOM', 'tree_per_person']])
 
 
-question_2()
+question_10("box")
