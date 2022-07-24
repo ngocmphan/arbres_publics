@@ -209,7 +209,8 @@ def question_6():
 
 def question_7():
     top_10_trees = list(trees_new['ESSENCE_ANG'].value_counts()[:10].index)
-    cluster_df = trees_new[['INV_TYPE', 'place', 'DHP', 'ARROND_NOM', 'ESSENCE_ANG']]
+    cluster_df = trees_new[['INV_TYPE', 'place', 'DHP',
+                            'ARROND_NOM', 'ESSENCE_ANG']]
     cluster_df = cluster_df[cluster_df['ESSENCE_ANG'].isin(top_10_trees)]
 
     def cluster_processing(df):
@@ -349,6 +350,17 @@ def question_10(option):
         plt.show()
 
 
+# 10a Compare the number of trees in different areas
+
+def question_10a():
+    trees_by_area = trees_new.groupby('ARROND_NOM')[
+        'ESSENCE_ANG'].count().reset_index()
+    bar = sns.barplot(x='ARROND_NOM', y='ESSENCE_ANG', data=trees_by_area)
+    plt.xticks(rotation=90, fontsize=8)
+    plt.title("Bar chart of number of trees by neighborhood")
+    plt.show()
+
+
 # 14 Sufficiency of green scenery on meeting population needs
 def question_14():
     population = 2025928
@@ -397,4 +409,4 @@ def question_15():
     print("Person per tree:", trees_by_area[["ARROND_NOM", 'Person_per_tree']])
 
 
-question_15()
+question_10a()
