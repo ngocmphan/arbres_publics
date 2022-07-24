@@ -1,5 +1,4 @@
 import pandas as pd
-import numpy as np
 
 
 def place_col(df):
@@ -28,7 +27,8 @@ def place_col(df):
     return df
 
 
-trees = pd.read_csv("arbres-publics.csv", dtype={'ARROND_NOM': str, 'Rue': str}, low_memory=False)
+trees = pd.read_csv("arbres-publics.csv", dtype={'ARROND_NOM': str, 'Rue': str},
+                    low_memory=False)
 
 # Missing values handling
 trees['DHP'] = trees['DHP'].fillna((trees['DHP'].mean()))
@@ -38,6 +38,3 @@ trees['Emplacement'] = trees['Emplacement'].str.lower()
 trees_new = place_col(trees)
 
 print(trees_new.info())
-
-
-

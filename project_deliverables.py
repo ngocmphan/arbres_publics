@@ -1,7 +1,6 @@
 # Data handling
 from data_prep import trees_new
 from math import sqrt
-import numpy as np
 import pandas as pd
 # visualization
 import matplotlib.pyplot as plt
@@ -12,7 +11,6 @@ from sklearn import preprocessing
 from sklearn.metrics import silhouette_score
 from sklearn.preprocessing import MinMaxScaler
 import statistics as stat
-import mca
 from pylab import *
 
 # Questions
@@ -65,7 +63,8 @@ def question_2b():
     trees_type_df = pd.DataFrame(trees_type).reset_index()
     trees_type_df = trees_type_df.rename(columns={"ESSENCE_ANG": "count",
                                          'index': "ESSENCE_ANG"})
-    maple_tree = trees_type_df[trees_type_df['ESSENCE_ANG'].str.contains('Maple')]
+    maple_tree = trees_type_df[
+        trees_type_df['ESSENCE_ANG'].str.contains('Maple')]
     print(sum(maple_tree['count']))
     print(len(maple_tree['ESSENCE_ANG'].unique()))
 
@@ -91,13 +90,14 @@ def question_4(option):
     multiplier = std / sqrt(n)
     if option is True:
         fig, ax = plt.subplots()
-        sns.histplot(trees_new, x='DHP').set_title('Distribution plot of trees diameter')
+        sns.histplot(trees_new, x='DHP')\
+            .set_title('Distribution plot of trees diameter')
         ax.set_xlim(0, 120)
         plt.show()
     else:
         ci_mtl = 'Confidence interval of Montreal trees: [{0:2f}, {1:2f}]'\
             .format(mean-1.96*multiplier, mean+1.96*multiplier)
-        print('95% confidence interval for DHP of trees: {}'.format(ci_mtl) )
+        print('95% confidence interval for DHP of trees: {}'.format(ci_mtl))
 
 
 # 4a Box plot of tree population
@@ -138,7 +138,7 @@ def question_4b():
     plt.title("Boxplots of top 12 tree types in GMA without outliers",
               fontsize=12)
     box_without = sns.boxplot(x='ESSENCE_ANG', y='DHP', data=top_12_df,
-                      showfliers=False, showmeans=True,
+                              showfliers=False, showmeans=True,
                               meanprops={'markeredgecolor': 'black'})
     sns.set(font_scale=0.5)
     plt.xticks(rotation=20, fontsize=12)
@@ -159,9 +159,6 @@ def question_5(option):
     on_road = trees_new.loc[trees_new['INV_TYPE'] == 'R']
     off_road = trees_new.loc[trees_new['INV_TYPE'] == 'H']
 
-    on_road_place = on_road['Emplacement'].value_counts()
-    off_road_place = off_road['Emplacement'].value_counts()
-
     std_on_road = on_road['DHP'].std()
     std_off_road = off_road['DHP'].std()
 
@@ -176,8 +173,10 @@ def question_5(option):
 
     if option is True:
         fig, ax = plt.subplots()
-        on_road_plot = sns.histplot(on_road, x='DHP', label='on_road', color='red')
-        off_road_plot = sns.histplot(off_road, x='DHP', label='off_road', color='blue')
+        on_road_plot = sns.histplot(on_road, x='DHP',
+                                    label='on_road', color='red')
+        off_road_plot = sns.histplot(off_road, x='DHP',
+                                     label='off_road', color='blue')
         ax.set_xlim(0, 120)
         plt.title('Distribution plot of on and off road trees')
         plt.legend()
@@ -186,15 +185,15 @@ def question_5(option):
         plt.title('Box plot of on and off road trees')
         plt.show()
     else:
-        CI_mtl_road = 'Confidence interval of on road trees: [{0:2f}, {1:2f}]'.\
+        ci_mtl_road = 'Confidence interval of on road trees: [{0:2f}, {1:2f}]'.\
             format(mean_on_road - 1.96*multiplier_on_road,
                    mean_on_road + 1.96*multiplier_on_road)
 
-        CI_mtl_off_road = 'Confidence interval of ' \
+        ci_mtl_off_road = 'Confidence interval of ' \
                           'off road trees: [{0:2f}, {1:2f}]'\
             .format(mean_off_road - 1.96*multiplier_off_road,
                     mean_off_road + 1.96*multiplier_off_road)
-        print(CI_mtl_off_road, CI_mtl_road)
+        print(ci_mtl_off_road, ci_mtl_road)
 
 # 6 Profile the placement of the trees
 
@@ -226,8 +225,8 @@ def question_7():
         mask = np.zeros_like(corr, dtype=np.bool8)
         mask[np.triu_indices_from(mask)] = True
         f, ax = plt.subplots(figsize=(11, 9))
-        cmap = sns.diverging_palette(220,10, as_cmap=True)
-        sns.heatmap(corr, mask=mask, cmap= cmap, vmax=0.3, center=0,
+        cmap = sns.diverging_palette(220, 10, as_cmap=True)
+        sns.heatmap(corr, mask=mask, cmap=cmap, vmax=0.3, center=0,
                     square=True)
         plt.title('Correlation plot')
         return
@@ -337,8 +336,10 @@ def question_10(option):
     Option "box": Display box plot of DHP by boroughs.
     Option "histo": Display histogram plot of DHP by boroughs """
     if option == 'box':
-        ax = sns.boxplot(x='ARROND_NOM', y='DHP', data=trees_new, showmeans=True,
-                         showfliers=False, meanprops={'markeredgecolor': 'black'})
+        ax = sns.boxplot(x='ARROND_NOM', y='DHP',
+                         data=trees_new, showmeans=True,
+                         showfliers=False,
+                         meanprops={'markeredgecolor': 'black'})
         ax.set_xticklabels(ax.get_xticklabels(), rotation=20, ha="right")
         plt.title("Boxplot of DHP by GMA neighborhoods")
         plt.xticks(fontsize=7)
