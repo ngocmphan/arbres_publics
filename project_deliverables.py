@@ -372,10 +372,11 @@ def question_15():
     trees_by_area = trees_new.groupby('ARROND_NOM')[
         'ESSENCE_ANG'].count().reset_index()
     # population of the area
-    trees_by_area['pop_2016'] = [134245, 42796, 166520, 76853, 104000, 78151,
-                                 136024, 3850, 69297, 106734 - 3850, 139590,
-                                 98828, 78305, 69229, 89170, 143853]
-    trees_by_area['pop_2021'] = trees_by_area['pop_2016'] * 1.035
+    # Need to fix the pop_2021 to update the population, data available
+
+    trees_by_area['pop_2021'] = [135336, 43243, 236897, 128663, 105813, 84553,
+                                 140627, 4394, 218639, 107941, 141813,
+                                 102104, 79495, 70377, 104944, 190672]
     # population needs
     trees_by_area['population_needs'] = trees_by_area['pop_2021'] * 7.5
 
@@ -386,8 +387,14 @@ def question_15():
     # trees per person by neighborhood
     trees_by_area['tree_per_person'] = trees_by_area['ESSENCE_ANG'] / \
                                        trees_by_area['pop_2021']
-    print(trees_by_area['ESSENCE_ANG'])
-    print(trees_by_area[['ARROND_NOM', 'tree_per_person']])
+
+    # Person per tree by neighborhood
+    trees_by_area['Person_per_tree'] = trees_by_area['pop_2021'] / \
+                                       trees_by_area['ESSENCE_ANG']
+
+    print("Sufficiency:", trees_by_area[["ARROND_NOM", 'sufficiency_rate']])
+    print('Trees per person:', trees_by_area[["ARROND_NOM", 'tree_per_person']])
+    print("Person per tree:", trees_by_area[["ARROND_NOM", 'Person_per_tree']])
 
 
-question_10("box")
+question_15()
