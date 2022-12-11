@@ -103,7 +103,7 @@ def question_4(option):
 # 4a Box plot of tree population
 def question_4a():
     box = plt.boxplot(x=trees_new['DHP'], showmeans=True, meanline=True)
-    plt.title('Boxplot of tree population in Montreal Island')
+    plt.title('Boxplot of tree population on Montreal Island')
     median = [line.get_data() for line in box['medians']][0]
     text(median[0][1]+0.05, median[1][0]-4, '%.1f' % median[1][0],
          horizontalalignment='right', verticalalignment='center')
@@ -341,7 +341,7 @@ def question_10(option):
                          showfliers=False,
                          meanprops={'markeredgecolor': 'black'})
         ax.set_xticklabels(ax.get_xticklabels(), rotation=20, ha="right")
-        plt.title("Boxplot of DHP by GMA neighborhoods")
+        plt.title("Boxplot of DHP by Montreal Island neighborhoods")
         plt.xticks(fontsize=7)
         plt.show()
     elif option == 'histo':
@@ -410,4 +410,4 @@ def question_15():
     print("Person per tree:", trees_by_area[["ARROND_NOM", 'Person_per_tree']])
 
 
-question_15()
+question_10('box')
