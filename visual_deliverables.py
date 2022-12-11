@@ -55,9 +55,9 @@ for value in gdf['NOM_OFFICIEL']:
 print(list_not_in)
 
 df_new = pd.DataFrame({"ARROND_NOM": list_not_in, "INV_TYPE": 0})
-viz_choropleth = viz_choropleth.append(df_new).reset_index()
+viz_choropleth = viz_choropleth.append(df_new)
 
-m = folium.Map(location=[45.50, -73.62], zoom_start=5)
+m = folium.Map(location=[45.50, -73.62], zoom_start=10)
 folium.Choropleth(
     geo_data=open(path).read(),
     data=viz_choropleth,
