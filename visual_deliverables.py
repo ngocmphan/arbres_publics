@@ -14,10 +14,13 @@ def viz_map_option(item):
     return
 
 
-path = "limites-administratives-agglomeration-nad83.json"
+path = "/Users/ngocphan/PycharmProjects/arbres_publics/" \
+       "limites-administratives-agglomeration-nad83.geojson"
 
 gdf = geopandas.read_file(path)
-# print(gdf["NOM_OFFICIEL"].unique())
+gdf["geometry"] = gdf["geometry"].to_crs(epsg=4326)
+gdf.to_file("montreal_island.json", driver="GeoJSON")
+
 
 borough_names_to_replace = list(trees_new['ARROND_NOM'].unique())
 
@@ -42,30 +45,25 @@ top_10_trees = list(trees_new['ESSENCE_ANG'].value_counts()[:10].index)
 type_selected = ["Silver Maple"]
 trees_choropleth = trees_choropleth[trees_choropleth["ESSENCE_ANG"]
     .isin(type_selected)]
+
 viz_choropleth = trees_choropleth.groupby(["ARROND_NOM"], as_index=False).count()
 viz_choropleth = viz_choropleth[['ARROND_NOM', "INV_TYPE"]]
 
-list_not_in = []
-for value in gdf['NOM_OFFICIEL']:
-    if value in borough_names_adjusted:
-        None
-    else:
-        list_not_in.append(value)
-
-print(list_not_in)
-
-df_new = pd.DataFrame({"ARROND_NOM": list_not_in, "INV_TYPE": 0})
-viz_choropleth = viz_choropleth.append(df_new)
+df_final = gdf.merge(viz_choropleth, left_on="NOM_OFFICIEL",
+                     right_on="ARROND_NOM", how="outer")
+df_final.reset_index(inplace=True)
 
 m = folium.Map(location=[45.50, -73.62], zoom_start=10)
 folium.Choropleth(
-    geo_data=open(path).read(),
-    data=viz_choropleth,
-    columns=['ARROND_NOM', 'INV_TYPE'],
+    geo_data="montreal_island.json",
+    data=df_final,
+    columns=['NOM_OFFICIEL', 'INV_TYPE'],
     key_on="feature.properties.NOM_OFFICIEL",
-    fill_color='YlOrRd',
+    fill_color='YlGn',
     fill_opacity=0.7,
     line_opacity=0.2,
-    legend_name='Number of trees').add_to(m)
+    legend_name='Number of trees',
+    nan_fill_color="White"
+).add_to(m)
 
-m.save("Choropleth of {} on Montreal Island.html".format(type_selected))
+m.save("Choropleth on Montreal Island.html")
