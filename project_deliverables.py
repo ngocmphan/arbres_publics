@@ -103,7 +103,7 @@ def question_4(option):
 # 4a Box plot of tree population
 def question_4a():
     box = plt.boxplot(x=trees_new['DHP'], showmeans=True, meanline=True)
-    plt.title('Boxplot of tree population in Greater Montreal Area')
+    plt.title('Boxplot of tree population in Montreal Island')
     median = [line.get_data() for line in box['medians']][0]
     text(median[0][1]+0.05, median[1][0]-4, '%.1f' % median[1][0],
          horizontalalignment='right', verticalalignment='center')
@@ -128,14 +128,14 @@ def question_4b():
     plt.figure()
     box = sns.boxplot(x='ESSENCE_ANG', y='DHP', data=top_12_df, showmeans=True,
                       meanprops={'markeredgecolor': 'black'})
-    plt.title("Boxplots of top 12 tree types in GMA with outliers")
+    plt.title("Boxplots of top 12 tree types on Montreal Island with outliers")
     sns.set(font_scale=0.5)
     plt.xticks(rotation=20, fontsize=12)
     plt.show()
 
     # Without outliers
     plt.figure()
-    plt.title("Boxplots of top 12 tree types in GMA without outliers",
+    plt.title("Boxplots of top 12 tree types on Montreal Island without outliers",
               fontsize=12)
     box_without = sns.boxplot(x='ESSENCE_ANG', y='DHP', data=top_12_df,
                               showfliers=False, showmeans=True,
@@ -410,4 +410,4 @@ def question_15():
     print("Person per tree:", trees_by_area[["ARROND_NOM", 'Person_per_tree']])
 
 
-question_10a()
+question_15()
