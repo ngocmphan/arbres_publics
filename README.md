@@ -42,8 +42,7 @@ Abres publics sur le territoire de la Ville. Ville de Montréal. Data updated on
 ## Deliverables
 
 ### Visualization
-* Interactive maps of existing trees of Montreal area.
-* Map of trees with size classification color coded. 
+* Choropleth map of the top five most prevalent types of trees and maple syrup trees.
 
 ### Quantitative deliverables
 #### Trees profile
