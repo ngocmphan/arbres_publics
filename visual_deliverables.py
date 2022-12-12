@@ -56,6 +56,9 @@ maple_list = list(question_2b())
 
 
 def choropleth_plotting(value, title):
+    """Function to create choropleth map with selected tree type.
+    The input is a list including one or more tree types"""
+
     # visualization data preparation with boroughs filter:
     type_selected = value
     trees_choropleth = trees_data_prep()
