@@ -38,9 +38,24 @@ def trees_data_prep():
 
 
 top_10_trees = list(trees_new['ESSENCE_ANG'].value_counts()[:10].index)
+print(top_10_trees)
 
 
-def choropleth_plotting(value):
+def question_2b():
+    trees_type = trees_new['ESSENCE_ANG'].value_counts()
+    trees_type_df = pd.DataFrame(trees_type).reset_index()
+    trees_type_df = trees_type_df.rename(columns={"ESSENCE_ANG": "count",
+                                         'index': "ESSENCE_ANG"})
+    maple_tree = trees_type_df[
+        trees_type_df['ESSENCE_ANG'].str.contains('Maple')]
+    list_maple_tree = maple_tree['ESSENCE_ANG'].unique()
+    return list_maple_tree
+
+
+maple_list = list(question_2b())
+
+
+def choropleth_plotting(value, title):
     # visualization data preparation with boroughs filter:
     type_selected = value
     trees_choropleth = trees_data_prep()
@@ -56,22 +71,47 @@ def choropleth_plotting(value):
     df_final = gdf.merge(viz_choropleth, left_on="NOM_OFFICIEL",
                          right_on="ARROND_NOM", how="outer")
     df_final.reset_index(inplace=True)
+    bins = list(df_final["INV_TYPE"].quantile([0, 0.25, 0.5, 0.75, 1]))
+    if len(value) < 2:
+        # Choropleth mapping:
+        print(title)
+        m = folium.Map(location=[45.50, -73.62], zoom_start=10)
+        folium.Choropleth(
+            geo_data="montreal_island.json",
+            name=value,
+            data=df_final,
+            columns=['NOM_OFFICIEL', 'INV_TYPE'],
+            key_on="feature.properties.NOM_OFFICIEL",
+            fill_color='YlGn',
+            fill_opacity=0.7,
+            line_opacity=0.2,
+            legend_name='Number of trees',
+            nan_fill_color="White",
+            bins=bins
+        ).add_to(m)
 
-    # Choropleth mapping:
-    m = folium.Map(location=[45.50, -73.62], zoom_start=10)
-    folium.Choropleth(
-        geo_data="montreal_island.json",
-        data=df_final,
-        columns=['NOM_OFFICIEL', 'INV_TYPE'],
-        key_on="feature.properties.NOM_OFFICIEL",
-        fill_color='YlGn',
-        fill_opacity=0.7,
-        line_opacity=0.2,
-        legend_name='Number of trees',
-        nan_fill_color="White"
-    ).add_to(m)
+        m.save("Choropleth of trees {} on Montreal Island.html".format(value))
+    else:
+        print(title)
+        m = folium.Map(location=[45.50, -73.62], zoom_start=10)
+        folium.Choropleth(
+            geo_data="montreal_island.json",
+            name=title,
+            data=df_final,
+            columns=['NOM_OFFICIEL', 'INV_TYPE'],
+            key_on="feature.properties.NOM_OFFICIEL",
+            fill_color='YlGn',
+            fill_opacity=0.7,
+            line_opacity=0.2,
+            legend_name='Number of trees',
+            nan_fill_color="White",
+            bins=bins
+        ).add_to(m)
+        m.save("Choropleth of {} trees Montreal Island.html".format(title))
 
-    m.save("Choropleth of {} trees on Montreal Island.html".format(value))
 
+choropleth_plotting(["Silver Maple"],"Silver Maple")
+choropleth_plotting(["Norway Maple"], "Norway Maple")
+choropleth_plotting(['Red Ash'], "Red Ash")
+choropleth_plotting(maple_list, "All maple trees")
 
-choropleth_plotting(["Silver Maple"])
