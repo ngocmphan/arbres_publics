@@ -67,6 +67,6 @@ Abres publics sur le territoire de la Ville. Ville de Montréal. Data updated on
 ### Conclusion
 * Please refer to Project Report Final.pdf file for the results. 
 * Please refer to the Choropleth maps (.html files) for the visualization 
-deliverable. 
+deliverable. Please download the file and open it in your browser. 
 
 
