@@ -64,5 +64,9 @@ Abres publics sur le territoire de la Ville. Ville de Montréal. Data updated on
 * Are the number of trees sufficient in general for Montreal area as a whole?
 * Compare sufficiency by area. 
 
+### Conclusion
+* Please refer to Project Report Final.pdf file for the results. 
+* Please refer to the Choropleth maps (.html files) for the visualization 
+deliverable. 
 
 
