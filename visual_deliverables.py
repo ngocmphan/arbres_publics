@@ -110,8 +110,8 @@ def choropleth_plotting(value, title):
         m.save("Choropleth of {} trees Montreal Island.html".format(title))
 
 
-choropleth_plotting(["Silver Maple"],"Silver Maple")
-choropleth_plotting(["Norway Maple"], "Norway Maple")
-choropleth_plotting(['Red Ash'], "Red Ash")
+choropleth_plotting(["Silver Maple"], "1 - Silver Maple")
+choropleth_plotting(["Norway Maple"], "2 - Norway Maple")
+choropleth_plotting(['Red Ash'], "3 - Red Ash")
 choropleth_plotting(maple_list, "All maple trees")
 
