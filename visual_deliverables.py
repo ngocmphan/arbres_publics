@@ -15,10 +15,6 @@ def geo_data():
     geo_path = "montreal_island.json"
     return gdf, geo_path
 
-# gdf = geopandas.read_file(path)
-# gdf["geometry"] = gdf["geometry"].to_crs(epsg=4326)
-# gdf.to_file("montreal_island.json", driver="GeoJSON")
-
 
 def trees_data_prep():
     borough_names_to_replace = list(trees_new['ARROND_NOM'].unique())
