@@ -57,7 +57,8 @@ maple_list = list(question_2b())
 
 def choropleth_plotting(value, title):
     """Function to create choropleth map with selected tree type.
-    The input is a list including one or more tree types"""
+    The input is a list including one or more tree types,
+     and title of the plot is required"""
 
     # visualization data preparation with boroughs filter:
     type_selected = value
@@ -81,7 +82,7 @@ def choropleth_plotting(value, title):
         m = folium.Map(location=[45.50, -73.62], zoom_start=10)
         folium.Choropleth(
             geo_data="montreal_island.json",
-            name=value,
+            name=title,
             data=df_final,
             columns=['NOM_OFFICIEL', 'INV_TYPE'],
             key_on="feature.properties.NOM_OFFICIEL",
@@ -93,7 +94,7 @@ def choropleth_plotting(value, title):
             bins=bins
         ).add_to(m)
 
-        m.save("Choropleth of trees {} on Montreal Island.html".format(value))
+        m.save("Choropleth of trees {} on Montreal Island.html".format(title))
     else:
         print(title)
         m = folium.Map(location=[45.50, -73.62], zoom_start=10)
