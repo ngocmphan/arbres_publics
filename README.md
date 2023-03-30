@@ -42,7 +42,7 @@ Abres publics sur le territoire de la Ville. Ville de Montréal. Data updated on
 ## Deliverables
 
 ### Visualization
-* Choropleth map of the top three most prevalent types of trees and maple syrup trees.
+* Choropleth map of all the trees on Montreal Island, the top three most prevalent types of trees and maple syrup trees.
 
 ### Quantitative deliverables
 #### Trees profile
