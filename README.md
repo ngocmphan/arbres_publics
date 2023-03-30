@@ -65,8 +65,5 @@ Abres publics sur le territoire de la Ville. Ville de Montréal. Data updated on
 * Compare sufficiency by area. 
 
 ### Conclusion
-* Please refer to Project Report Final.pdf file for the results. 
-* Please refer to the Choropleth maps (.html files) for the visualization 
-deliverable. Please download the file and open it in your browser. 
-
+Visit the following project Github pages for results: https://ngocmphan.github.io/arbres_publics/
 
