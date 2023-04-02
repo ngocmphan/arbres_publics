@@ -39,6 +39,9 @@ The data set has missing observations for 12 variables. In addition, the data so
 The dataset can be obtained from the following source:
 Abres publics sur le territoire de la Ville. Ville de Montréal. Data updated on May 03, 2021. Retrieved from: https://donnees.montreal.ca/ville-de-montreal/arbres
 
+## Tools used
+* Python libraries: Pandas, Geopandas, Folium, Matplotlib, sklearn, seaborn
+
 ## Deliverables
 
 ### Visualization
