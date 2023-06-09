@@ -1,7 +1,7 @@
 # arbres_publics
 
 ## Topic
-The topic of the project is exploring the greenery of the Greater Montreal Area with public trees to inform the public about the changes in trees and green scenery. 
+The topic of the project is exploring the green sceneries of Montreal Island to inform the public about the changes in trees, green scenery and sufficiency of the trees per residing population in each borough. 
 
 ## Project goal
 Based on the fact that each individual needs on average seven or eight trees for air and 3-5% of trees die each year, we are assessing the number of public trees in Montreal against the number of residents currently living on Montreal Island. The project aims to determine if the number of trees are appropriate for the current population living in Montreal. In addition, exploration regarding the wellness and diversity of the trees planted is conducted. 
